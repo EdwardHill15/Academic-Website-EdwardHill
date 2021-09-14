@@ -1,27 +1,28 @@
 ---
-bio: My research interests include distributed robotics, mobile computing and programmable
-  matter.
+bio: My research interests include psychology, philosophy and data science of the origin and nature of human consciousness.
+  
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
-email: ""
+  - course: Ba-PE in Physical Education
+    institution: Academy of Physical Education in The Hague
+    year: 1987
+  - course: MSc in Movement and Exercise Science
+    institution: Universiteit Utrecht
+    year: 1992
+  - course: MSc in Psychology
+    institution: Universiteit Utrecht
+    year: 1995
+  
+email: total-health@kpnmail.nl
 highlight_name: true
 interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
+- Psychology of Human Consciousness
+- Mindfulness-Based Body Movement Reprocessing
+- Exercise Psychology and Health
 organizations:
-- name: Stanford University
-  url: https://www.stanford.edu/
-role: Professor of Artificial Intelligence
+- name: Total Health Foundation
+  url: https://www.totalegezondheid.nl
+role: Writer - Data Scientist - Philosopher
 social:
 - icon: envelope
   icon_pack: fas
@@ -31,22 +32,23 @@ social:
   icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
-  link: https://twitter.com/GeorgeCushen
-- icon: graduation-cap
-  icon_pack: fas
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
-- icon: github
-  icon_pack: fab
-  link: https://github.com/gcushen
+  link: 'https://twitter.com/EdwardHill1512'
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/
+  link: 'https://www.linkedin.com/in/visietotaal?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BIyLg5DWVS26zIXhC9gunCg%3D%3D'
+  
+  
+  
 superuser: true
-title: Nelson Bighetti
+title: Edward Hillenaar
 ---
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+My name is Edward F. Hillenaar and I am the founder and CEO of Total Health Foundation. Through a journey in different directions, I now walk a path in which my knowledge and life experiences are used for therapy and counseling to improve the 'quality of life'.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+As a serious athlete I've always experienced the positive effects of sport and exercise and fitness on my physical and mental well-being. Running is my passion and in 2012,  I participated in an ultra-marathon race of 236 km. ("The Ancient Khmer Path ') in Cambodia. The combination of such a physical and mental exercise in a Buddhist country like Cambodia has been an unforgettable experience for me. I have learned a lot about myself and my consciousness in exceptional circumstances.
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
+My regular 'scientific' education consists respectively of the Academy of Physical Education and Physiotherapy in The Hague (HALO); Sports and Exercise Science at the University of Utrecht ("Sports, Exercise and Health"); and Clinical-Health Psychology. Combined with my interest in Eastern Buddhist psychology and philosophy, all my knowledge and experience now can be used for my mission within Total Health Foundation.
+
+My research interests include psychology, philosophy and data science of the origin and nature of human consciousness.
+
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/resume.pdf" "newtab" >}}resumé{{< /staticref >}}.

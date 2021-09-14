@@ -5,7 +5,7 @@
 
 # Appearance
 
-theme: minimal
+theme: ocean 
 day_night: true
 font: ''
 font_size: L
@@ -20,40 +20,30 @@ twitter: ''
 
 # Contact (edit or remove options as required)
 
-email: test@example.org
-phone: 888 888 88 88
-address:
-  street: 450 Serra Mall
-  city: Stanford
-  region: CA
-  postcode: '94305'
-  country: United States
-  country_code: US
-coordinates:
-  latitude: '37.4275'
-  longitude: '-122.1697'
-directions: Enter Building 1 and take the stairs to Office 200 on Floor 2
-office_hours:
-  - 'Monday 10:00 to 13:00'
-  - 'Wednesday 09:00 to 10:00'
-appointment_url: 'https://calendly.com'
+email: total-health@kpnmail.nl
+phone: +31 625505060
+
 contact_links:
   - icon: twitter
     icon_pack: fab
-    name: DM Me
-    link: 'https://twitter.com/Twitter'
-  - icon: skype
-    icon_pack: fab
-    name: Skype Me
-    link: 'skype:echo123?call'
-  - icon: keybase
-    icon_pack: fab
-    name: Chat on Keybase
-    link: 'https://keybase.io/'
+    name: follow me
+    link: 'https://twitter.com/EdwardHill1512'
   - icon: comments
     icon_pack: fas
     name: Discuss on Forum
     link: 'https://discourse.gohugo.io'
+  - icon: facebook
+    icon_pack: fab
+    name: facebook
+    link: 'https://facebook.com/EdwardHillenaar'
+  - icon: linkedin 
+    icon_pack: fab 
+    name: LinkedIn 
+    link: 'https://www.linkedin.com/in/visietotaal?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BIyLg5DWVS26zIXhC9gunCg%3D%3D'
+  - icon: whatsapp  
+    icon_pack: fab 
+    name: Whatsapp 
+    link: 'whatsapp://send?text={title}%20{url}'
 
 # Site header
 

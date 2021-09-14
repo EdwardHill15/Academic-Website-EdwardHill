@@ -23,27 +23,27 @@ date_format: Jan 2006
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
   - title: CEO
-    company: GenCoin
-    company_url: ''
-    company_logo: org-gc
-    location: California
-    date_start: '2021-01-01'
+    company: Total Health Foundation
+    company_url: 'https://www.totalegezondheid.nl'
+    company_logo: THF-logo
+    location: Zwaag (The Netherlands)
+    date_start: '1995-06-01'
     date_end: ''
     description: |2-
         Responsibilities include:
         
-        * Analysing
-        * Modelling
-        * Deploying
+        * Training/Coaching/Therapy
+        * Scientific Research
+        * Psychology/Philosophy
         
-  - title: Professor of Semiconductor Physics
-    company: University X
+  - title: PhD candidate
+    company: Free University Amsterdam
     company_url: ''
-    company_logo: org-x
-    location: California
-    date_start: '2016-01-01'
-    date_end: '2020-12-31'
-    description: Taught electronic engineering and researched semiconductor physics.
+    company_logo: VU-logo
+    location: Amsterdam
+    date_start: '2015-04-23'
+    date_end: ''
+    description: Body-oriented psychotherapy method for psychological distress and psychotrauma; Mindfulness-Based Body Movement Reprocessing
 
 design:
   columns: '2'

@@ -16,18 +16,19 @@ subtitle:
 # - Add/remove as many `feature` blocks below as you like.
 # - For available icons, see: https://wowchemy.com/docs/page-builder/#icons
 feature:
-- description: 90%
+- description: I have 3 years of experience with R statistics package
   icon: r-project
   icon_pack: fab
   name: R
-- description: 100%
+- description: I am experienced in Regression Analysis, Factor Analysis and Bayesian statistics
   icon: chart-line
   icon_pack: fas
   name: Statistics
-- description: 10%
-  icon: camera-retro
+- description: I am a trainer/coach/therapist in my own company; Total Health Foundation
+  icon: running
   icon_pack: fas
-  name: Photography
+  name: CEO
+
 
 # Uncomment to use emoji icons.
 #- icon: ':smile:'
