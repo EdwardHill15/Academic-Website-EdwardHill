@@ -51,4 +51,4 @@ My regular 'scientific' education consists respectively of the Academy of Physic
 
 My research interests include psychology, philosophy and data science of the origin and nature of human consciousness.
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
+#{{< icon name="download" pack="fas" >}} Download my {{< staticref #"uploads/resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
