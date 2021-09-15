@@ -4,7 +4,7 @@ external_link: https://dailynous.com/2015/10/15/the-future-of-online-conferences
 image:
   caption: Photo by Toa Heftiba on Unsplash
   focal_point: Smart
-summary: The Future of Philosophy.
+summary: The Future of Philosophy
 tags:
 - Demo
 title: The Future of Philosophy
