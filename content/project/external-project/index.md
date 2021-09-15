@@ -1,11 +1,11 @@
 ---
 date: "2016-04-27T00:00:00Z"
-external_link: http://example.org
+external_link: https://dailynous.com/2015/10/15/the-future-of-online-conferences-in-philosophy/
 image:
   caption: Photo by Toa Heftiba on Unsplash
   focal_point: Smart
-summary: An example of linking directly to an external project website using `external_link`.
+summary: The Future of Philosophy.
 tags:
 - Demo
-title: External Project
+title: The Future of Philosophy
 ---
