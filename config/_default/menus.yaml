@@ -22,9 +22,12 @@ main:
   - name: Publications
     url: '#publications'
     weight: 60
+  - name: Reading List
+    url: '#reading list'
+    weight: 70
   - name: Courses
     url: courses/
-    weight: 70
+    weight: 80
   - name: Contact
     url: '#contact'
-    weight: 80
+    weight: 90
