@@ -20,14 +20,17 @@ url_slides: ""
 url_video: ""
 ---
 
-```{r}
+```{r, echo=FALSE}
 # install.packages("palmerpenguins")
 library(palmerpenguins)
-head(penguins, 10)
+library(DT)
+datatable(penguins)
+```
 
+```{r, echo=FALSE}
 library(ggplot2)
 ggplot(penguins, aes(bill_length_mm, bill_depth_mm, color = species)) + 
   geom_point()
-
 ```
+
 

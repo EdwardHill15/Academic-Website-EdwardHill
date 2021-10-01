@@ -1,0 +1,48 @@
+---
+title: "Finland History"
+author: "Edward Hill"
+date: "21-9-2021"
+output: html_document
+---
+
+<script src="/edwardhill15-academic.netlify.apprmarkdown-libs/header-attrs/header-attrs.js"></script>
+<script src="/edwardhill15-academic.netlify.apprmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/edwardhill15-academic.netlify.apprmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/edwardhill15-academic.netlify.apprmarkdown-libs/leaflet/leaflet.css" rel="stylesheet" />
+<script src="/edwardhill15-academic.netlify.apprmarkdown-libs/leaflet/leaflet.js"></script>
+<link href="/edwardhill15-academic.netlify.apprmarkdown-libs/leafletfix/leafletfix.css" rel="stylesheet" />
+<script src="/edwardhill15-academic.netlify.apprmarkdown-libs/proj4/proj4.min.js"></script>
+<script src="/edwardhill15-academic.netlify.apprmarkdown-libs/Proj4Leaflet/proj4leaflet.js"></script>
+<link href="/edwardhill15-academic.netlify.apprmarkdown-libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+<script src="/edwardhill15-academic.netlify.apprmarkdown-libs/leaflet-binding/leaflet.js"></script>
+
+
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}]},"evals":[],"jsHooks":[]}</script>
+<div id="history-of-finland" class="section level1">
+<h1>History of Finland</h1>
+<div class="figure">
+<img src="https://images.unsplash.com/photo-1610963196817-7d1415647029?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="" />
+<p class="caption">Finland Nature</p>
+</div>
+<div class="figure">
+<img src="https://images.unsplash.com/photo-1538332576228-eb5b4c4de6f5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1470&amp;q=80" alt="" />
+<p class="caption">Helsinki Cathedral in Autumn Sunset</p>
+</div>
+<div class="figure">
+<img src="https://images.unsplash.com/photo-1590229495328-308b8f920a21?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1075&amp;q=80" alt="" />
+<p class="caption">While hiking in Nuuksio national park, Espoo</p>
+</div>
+</div>
+<div id="finland-norway-sweden-russia-latitude-and-longitude-video" class="section level1">
+<h1>Finland, Norway, Sweden, Russia Latitude and Longitude + video</h1>
+</div>
+<div id="finland-dataframe" class="section level1">
+<h1>Finland Dataframe</h1>
+<pre class="r"><code>Finland &lt;- data.frame(country, lat, lon, video)</code></pre>
+</div>
+<div id="map-of-finland-norway-sweden-and-russia" class="section level1">
+<h1>Map of Finland, Norway, Sweden and Russia</h1>
+<div id="htmlwidget-2" style="width:672px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[[61.9241,64.5783089,64.964875,55],[25.7482,17.888237,17.675409,103],null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},["Finland <iframe width=\"560\" height=\"315\" \nsrc=\"https://www.youtube.com/embed/TcXXJis03SE\" title=\"YouTube video player\" \nframeborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; \nencrypted-media; gyroscope; picture-in-picture\" allowfullscreen><\/iframe>","Norway <iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cntxv3w_xyE\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; \n            encrypted-media; gyroscope; picture-in-picture\" allowfullscreen><\/iframe>","Sweden <iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/YiXCg0lzIww\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; \n            encrypted-media; gyroscope; picture-in-picture\" allowfullscreen><\/iframe>","Rusia <iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Y4cXIyyc-L0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; \nencrypted-media; gyroscope; picture-in-picture\" allowfullscreen><\/iframe>"],null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[55,64.964875],"lng":[17.675409,103]}},"evals":[],"jsHooks":[]}</script>
+</div>
