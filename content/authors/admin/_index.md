@@ -39,7 +39,9 @@ social:
 - icon: github
   icon_pack: fab
   link: 'https://github.com/EdwardHill15' 
-  
+- icon: gitlab
+  icon_pack: fab
+  link: 'https://gitlab.com/EdwardHill15' 
   
 superuser: true
 title: Edward Hillenaar
