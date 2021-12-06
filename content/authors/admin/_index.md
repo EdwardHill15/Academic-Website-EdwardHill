@@ -36,7 +36,7 @@ social:
 - icon: linkedin
   icon_pack: fab
   link: 'https://www.linkedin.com/in/visietotaal?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BIyLg5DWVS26zIXhC9gunCg%3D%3D'
-- icon: Github
+- icon: GitHub
   icon_pack: fab
   link: 'https://github.com/EdwardHill15' 
   
