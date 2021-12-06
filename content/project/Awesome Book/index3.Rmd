@@ -1,0 +1,66 @@
+---
+title: "An Awesome Book"
+author: "Edward Hill"
+date: "11-9-2021"
+output: 
+  cleanrmd::html_document_clean:
+    theme: sakura-vader
+bibliography: ref.bib
+biblio-style: apalike
+link-citations: yes
+---
+
+# Introduction
+
+Include reference in the text [@libby2002inflammation]. This is another citation [@hansson2011immune]. [@henry2009evaluation]
+
+More references: 
+[@gibson1952visual]
+[@gibson2002theory]
+[@gibson2013theories]
+
+En nog meer: [@vallejo2006mindfulness]
+
+Bergson [@kolakowski1985bergson]
+
+*Dit is een test* om te kijken of Markdown het goed doet. 
+
+[Totale Gezondheid Praktijk](https://www.totalegezondheid.nl/)
+
+[Edward Hill Google site](https://sites.google.com/view/edwardhill15/homepage)
+
+![wow great picture](https://images.unsplash.com/photo-1608159477202-8a0e27f807b4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80)
+
+![second great pic](https://images.unsplash.com/photo-1611307742746-43cbea512c37?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bmF0dXJlJTIwbGFuZHNjYXBlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60)
+
+
+ * **punt 1**
+ * **punt 2**
+ * **punt 3**
+ * **punt 4**
+ 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# References
