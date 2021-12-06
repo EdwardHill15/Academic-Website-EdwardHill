@@ -48,7 +48,10 @@ contact_links:
     icon_pack: fab 
     name: Github
     link: 'https://github.com/EdwardHill15?tab=repositories'
-
+  - icon: gitlab  
+    icon_pack: fab 
+    name: Gitlab
+    link: 'https://gitlab.com/EdwardHill15'
 # Site header
 
 main_menu:
