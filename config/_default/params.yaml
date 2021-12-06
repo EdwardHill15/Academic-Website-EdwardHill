@@ -52,8 +52,8 @@ contact_links:
     icon_pack: fab 
     name: Gitlab
     link: 'https://gitlab.com/EdwardHill15'
-  - icon: RStudio  
-    icon_pack: fab 
+  - icon: rstudio  
+    icon_pack: fas 
     name: Rstudio Cloud
     link: 'https://rstudio.cloud/projects' 
     
