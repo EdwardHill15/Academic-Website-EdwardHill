@@ -44,6 +44,10 @@ contact_links:
     icon_pack: fab 
     name: Whatsapp 
     link: 'whatsapp://send?text={title}%20{url}'
+  - icon: github  
+    icon_pack: fab 
+    name: Github
+    link: 'https://github.com/EdwardHill15?tab=repositories'
 
 # Site header
 
