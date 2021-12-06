@@ -1,0 +1,66 @@
+---
+title: "Alfred North Whitehead"
+author: "Edward Hill"
+date: "06-12-2021"
+output: 
+  #cleanrmd::html_document_clean:
+    #theme: sakura-vader
+    html_document:
+      theme: darkly
+      toc: true
+      toc_float: true
+bibliography: Whitehead.bib
+biblio-style: apalike
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+Include reference in the text [@Sjostedt-Hughes2016]. This is another citation [@Segall2019]. [@Smith2010]
+
+More references: 
+[@Maxwell2011]
+[@Lowe1990]
+[@Whitehead1929]
+
+En nog meer: [@Whitehead2007]
+
+Alfred North Whitehead [@Whitehead1922]
+
+![Alfred North Whitehead](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5mJNNsRXJEEAHckAcjz4JYpcC2jDwHVY4tD3AZ7xh1v3h23WEb5zOF_1rT59bySSG5Bc&usqp=CAU)
+
+![Alfred North Whitehead](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRXnNMVYN_DVJ2Ikv6UwgKDWfml1b9OxX4CJ81dD89atMV90Q5xrUf1H27WdD-K2wcEaw&usqp=CAU)
+
+ * **punt 1**
+ * **punt 2**
+ * **punt 3**
+ * **punt 4**
+ 
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+# Results {.tabset}
+
+## Data
+```{r cars}
+summary(cars)
+```
+
+## Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+## Regression
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# References
