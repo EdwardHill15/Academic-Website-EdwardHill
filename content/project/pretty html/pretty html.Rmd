@@ -1,0 +1,58 @@
+---
+title: "pretty html"
+author: "Edward Hill"
+date: "6-12-2021"
+output:
+  html_document:
+    theme: united
+    toc: true
+    toc_floated: true
+---
+
+```{css, echo = FALSE}
+ body {
+   background-color: black;
+   filter: invert(1);
+ }
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+[Pretty html themes](https://bd4c.netlify.app/pretty-rmd.html)
+
+![beautiful picture 1](https://images.unsplash.com/photo-1638348057100-6a069f7af7c7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDIxfDZzTVZqVExTa2VRfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60)
+
+![beautiful picture 2](https://images.unsplash.com/photo-1637515944864-426524797cdc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDI1fDZzTVZqVExTa2VRfHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60)
+
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+## Data
+```{r cars}
+summary(cars)
+```
+
+## Results {.tabset}
+
+### Plots
+### Scatter
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Conclusion
+
+## References
