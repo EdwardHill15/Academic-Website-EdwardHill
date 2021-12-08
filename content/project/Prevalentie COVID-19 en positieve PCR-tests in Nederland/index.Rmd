@@ -146,7 +146,7 @@ c <- ggplot(data=Benelux)
 d <- c + geom_point(aes(x=date, y=PCR_test_positief, 
                   colour=country), size=1.2) +
   labs(y="Positieve PCR Test", 
-       x="Dagen vanaf januari 2020", 
+       x="Dagen vanaf februari 2020", 
        title="Prevalentie Positieve PCR-tests in Benelux + Duitsland", 
        caption = "Source: EdwardHill15 in Github") +
   geom_line(aes(x=date, y=PCR_test_positief, 
