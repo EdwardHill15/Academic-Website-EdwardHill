@@ -1,0 +1,181 @@
+---
+title: "Prevalentie COVID-19 en positieve PCR-tests in Nederland"
+author: "Edward Hillenaar"
+date: "7-12-2021"
+output: 
+  html_document: 
+    toc: yes
+    fig_caption: yes
+    number_sections: yes
+    theme: journal
+    keep_md: yes
+    fig_width: 8
+bibliography: ["Covid.bib"]
+biblio-style: "apalike"
+link-citations: true
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(readr)
+library(tidyverse)
+library(knitr)
+library(ggplot2)
+library(lubridate)
+library(janitor)
+library(ggthemes)
+library(DT)
+library(psych)
+library(lattice)
+opts_chunk$set(echo = FALSE)
+```
+
+```{css, echo=FALSE}
+#body {
+  #background-color: black;
+  #filter: invert(1);
+#}
+```
+
+
+```{r theme plot, echo=FALSE, include=FALSE}
+Ed_theme <- theme(axis.line.y = element_line(colour = "black", size = 0.1),
+                  axis.line.x = element_line(colour = "black", size = 0.1),
+                  panel.grid.minor = element_blank(),
+                  panel.background = element_rect(fill="grey95"),
+                  panel.border = element_rect(colour = "black", fill = NA),
+                  axis.title.x = element_text(size = 20, margin = margin(5,0,0,0)),
+                  axis.title.y = element_text(size = 20, margin = margin(0,10,0,0)),
+                  axis.text = element_text(size = 16, colour = "black"),
+                  axis.text.x = element_text(margin = margin(t=5)),
+                  plot.title = element_text(size = 45, hjust = 0.5),
+                  legend.position = c(0.10, 0.80),
+                  legend.key.size = unit(1, "cm"),
+                  legend.text = element_text(size = 9),
+                  legend.text.align = 0,
+                  legend.title = element_blank(),
+                  legend.background = element_blank(),
+                  legend.key = element_rect(fill=NA, colour = NA),
+                  strip.text = element_text(size = 14, face = "bold"),
+                  strip.background = element_rect(colour = "black"),
+                  panel.spacing = unit(0,"lines")
+)
+```
+
+# Inleiding
+
+Geen enkele test geeft een 100% nauwkeurig resultaat. Tests moeten worden geëvalueerd om hun gevoeligheid en specificiteit te bepalen, idealiter door: vergelijking met een ‘gouden standaard’. Het ontbreken van zo'n duidelijke "gouden standaard" voor covid-19-testen maakt het evalueren van de testnauwkeurigheid een uitdaging. Een systematische review van de nauwkeurigheid van covid-19-tests meldde fout-negatieve percentages tussen 2% en 29% (wat overeenkomt met een gevoeligheid van 71-98%), op basis van negatieve RT-PCR-tests die positief waren bij herhaalde tests.[@Watson2020a]
+
+Stel dat u positief of negatief test op SARS-Cov-2, het coronavirus dat COVID-19 veroorzaakt. Hoe groot is de kans dat je de ziekte daadwerkelijk hebt? In dit artikel ga ik kijken naar de stelling van Bayes uit de wiskunde om ons te helpen de voorwaardelijke kansen te berekenen. COVID-19-tests vallen eigenlijk in twee categorieën, genetische tests en antilichaamtesten, en beide hebben verschillende niveaus van gevoeligheid en specificiteit, d.w.z. hoe nauwkeurig ze zijn. Terwijl genetische tests extreem lage fout-positieve percentages hebben, hebben sommige antilichaamtests hogere fout-positieve percentages en, gezien de lage prevalentie in de algemene bevolking, laat de stelling van Bayes zien hoe problematisch dit eigenlijk kan zijn. [@Bazett2020]
+
+Aantal cumulatieve positieve PCR-tests op 5 december 2021 in Nederland:  
+Max. 2814521, zegge ruim 2.81 miljoen. Aantal inwoners Nederland in 2020 = 17,44 miljoen (2020). 
+Dat betekent dat de prevalentie van positieve testen op SARS-CoV-2 is een simpel rekensommetje van 2814521 / 17440000 = 0.1613831, oftewel; 1,6 %. [^note]
+
+Github repository voor COVID-19 data en analyses van Center for Systems Science and Engineering (CSSE) at Johns Hopkins University. [@University]
+
+# Methoden 
+
+## Data definitie COVID-19 in Benelux en Duitsland
+
+[My Github repository](https://github.com/EdwardHill15/COVID-19)
+
+```{r, echo = FALSE, include=FALSE}
+covid_19 <- read_csv("D:/COVID-19/Covid and Statistics/cumulative-deaths-and-cases-covid-19.csv")
+covid_19 <- as.data.frame(covid_19)
+names(covid_19) <- c("country", "code", "date", "deaths", "PCR_test_positief")
+covid_19$country <- as.factor(covid_19$country)
+covid_19$code <- as.factor(covid_19$code)
+covid_19$date <- as.Date(covid_19$date)
+covid_19$PCR_test_positief<- as.numeric(covid_19$PCR_test_positief)
+Netherlands <- covid_19 %>% 
+  select(country, date, PCR_test_positief) %>% 
+  filter(country == "Netherlands")
+Benelux <- covid_19 %>% 
+  select(country, date, PCR_test_positief) %>% 
+  filter(country == "Netherlands" | country == "Belgium" | country == "Germany" | 
+  country == "Luxembourg")
+```
+
+## Data positieve PCR-tests in Nederland
+
+```{r, echo=TRUE}
+datatable(Netherlands)
+summary(Netherlands$PCR_test_positief)
+```
+
+## Data positieve PCR-tests in Benelux inclusief Duitsland
+
+```{r, echo=TRUE}
+datatable(Benelux)
+summary(Benelux$PCR_test_positief)
+```
+
+## Bayes' Formule en voorwaardelijke kansen van besmetting met SARS-CoV-2 
+
+Comment on "Bayes' Theorem in the 21st Century" by Bradley Efron [@Amrhein2013]
+
+Suppose you test positive or negative for SARS-Cov-2, the coronavirus that causes COVID-19. What are the chances you actually have the disease? In this video we're going to look at Bayes' Theorem from mathematics to help us compute the conditional probabilities. COVID-19 tests are actually in two categories, genetic tests and antibody tests, and both of these have different levels of sensitivity and specificity - i.e how accurate they are. While Genetic tests have extremely low false positive rates, some antibody tests do have higher false positive rates and, given the low prevalence in the general population, Bayes' theorem demonstrates how problematic this can actually be. Disclaimer: I'm not a medical doctor or epidemilogist, just a math prof, and so these toy examples are meant to illustrate the ideas of Bayes' theorem, not make actual concrete predictions based on a specific test [@Bazett2020]
+
+Covid and Statistics/Interpreting a covid 19 test result Jessica Watson bmj.m1808.full.pdf:pdf [@Watson2020]
+
+# Resultaten 
+
+## Prevalentie cijfers COVID-19 in Nederland
+
+In figuur 1 is de evolutie van de prevalentiecijfers te lezen van positieve PCR-tests in Nederland vanaf 27 februari 2020 tot en met 6 december 2021. 
+
+```{r fig.cap = "Figuur 1: Dagen op de x-as vanaf 27 februari 2020 tot en met 6 december 2021 in Nederland."}
+a <- ggplot(data=Netherlands)
+b <- a + geom_point(aes(x=date, y=PCR_test_positief, 
+                  colour=country), size=1.2) +
+  labs(y="Positieve PCR Test", 
+       x="Dagen vanaf februari 2020", 
+       title="Aantal Positieve PCR-tests in Nederland", 
+       caption = "Source: EdwardHill15 in Github") +
+  geom_line(aes(x=date, y=PCR_test_positief, 
+                colour=country), size=1.2)
+b
+```
+
+![COVID in Nederland](Cumulatieve confirmed COVID-19 cases and deaths in the Netherlands.jpg)
+
+## Prevalentie cijfers COVID-19 in Benelux en Duitsland
+
+In figuur 2 is de evolutie van de prevalentiecijfers te lezen van positieve PCR-tests in de Benelux, inclusief Duitsland vanaf 27 februari 2020 tot en met 6 december 2021.
+
+```{r fig.cap= "Figuur 2: Dagen op de x-as vanaf 27 februari 2020 tot en met 6 december 2021 in Benelux en Duitsland."}
+c <- ggplot(data=Benelux)
+d <- c + geom_point(aes(x=date, y=PCR_test_positief, 
+                  colour=country), size=1.2) +
+  labs(y="Positieve PCR Test", 
+       x="Dagen vanaf januari 2020", 
+       title="Prevalentie Positieve PCR-tests in Benelux + Duitsland", 
+       caption = "Source: EdwardHill15 in Github") +
+  geom_line(aes(x=date, y=PCR_test_positief, 
+                colour=country), size=1.2)
+d
+```
+
+## Regressie Prevalentie positieve tests COVID-19 in Nederland
+
+```{r fig.cap = "Figuur 3: Loess line voor prevalentie COVID-19 in Nederland"}
+xyplot(PCR_test_positief ~ date,
+      data = Netherlands,
+      type = c("p", "smooth"),
+      pch = 19,
+      main = "Prevalentie COVID-19 in Nederland",
+      xlab = "Dagen vanaf februari 2020",
+      ylab = "Prevalentie Positieve PCR-tests")
+```
+
+# Conclusie and Discussie
+
+
+There is increasing concern that most current published research findings are false. The probability that a research claim is true may depend on study power and bias, the number of other studies on the same question, and, importantly, the ratio of true to no relationships among the relationships probed in each scientific field. Method: Simulations are performed to assess the likelihood that a published result is false. Results: In this framework, a research finding is less likely to be true when the studies conducted in a field are smaller; when effect sizes are smaller; when there is a greater number and lesser preselection of tested relationships; where there is greater flexibility in designs, definitions, outcomes, and analytical modes; when there is greater financial and other interest and prejudice; and when more teams are involved in a scientific field in chase of statistical significance. Discussion: For many current scientific fields, claimed research findings may often be simply accurate measures of the prevailing bias. Conclusion: In this essay, I discuss the implications of these problems for the conduct and interpretation of research [@Ioannidis2021]
+
+Weinig fenomenen hadden op globaal niveau zo snel een diepgaande impact als de huidige corona-uitbraak. In een mum van tijd werd het menselijk leven totaal gereorganiseerd. Hoe dit kon, wat de consequenties ervan zijn en wat we verder kunnen verwachten vragen we aan Mattias Desmet, psychotherapeut en professor klinische psychologie aan de Gentse universiteit[@Dewals2021]
+
+# Referenties
+
+[^note]: "bron: [google search](https://www.google.com/search?q=inwoners+nederland&rlz=1C1GCEA_enNL943NL943&oq=Inwon&aqs=chrome.2.69i57j0i512j0i433i512l3j0i512l5.3174j1j15&sourceid=chrome&ie=UTF-8)"
+
