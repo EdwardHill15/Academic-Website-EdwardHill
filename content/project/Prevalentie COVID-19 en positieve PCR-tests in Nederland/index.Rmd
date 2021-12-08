@@ -68,8 +68,8 @@ Geen enkele test geeft een 100% nauwkeurig resultaat. Tests moeten worden geëva
 Stel dat u positief of negatief test op SARS-Cov-2, het coronavirus dat COVID-19 veroorzaakt. Hoe groot is de kans dat je de ziekte daadwerkelijk hebt? In dit artikel ga ik kijken naar de stelling van Bayes uit de wiskunde om ons te helpen de voorwaardelijke kansen te berekenen. COVID-19-tests vallen eigenlijk in twee categorieën, genetische tests en antilichaamtesten, en beide hebben verschillende niveaus van gevoeligheid en specificiteit, d.w.z. hoe nauwkeurig ze zijn. Terwijl genetische tests extreem lage fout-positieve percentages hebben, hebben sommige antilichaamtests hogere fout-positieve percentages en, gezien de lage prevalentie in de algemene bevolking, laat de stelling van Bayes zien hoe problematisch dit eigenlijk kan zijn. [@Bazett2020]
 
 Aantal cumulatieve positieve PCR-tests op 5 december 2021 in Nederland:  
-Max. 2814521, zegge ruim 2.81 miljoen. Aantal inwoners Nederland in 2020 = 17,44 miljoen (2020). 
-Dat betekent dat de prevalentie van positieve testen op SARS-CoV-2 is een simpel rekensommetje van 2814521 / 17440000 = 0.1613831, oftewel; 1,6 %. [^note]
+Max. 2814521, zegge ruim 2.81 miljoen. Aantal inwoners Nederland in 2020 = 17,44 miljoen (2020).[^note] 
+Dat betekent dat de prevalentie van positieve testen op SARS-CoV-2 is een simpel rekensommetje van 2814521 / 17440000 = 0.1613831, oftewel; 1,6 %. 
 
 Github repository voor COVID-19 data en analyses van Center for Systems Science and Engineering (CSSE) at Johns Hopkins University. [@University]
 
