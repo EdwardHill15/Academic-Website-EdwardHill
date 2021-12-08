@@ -137,8 +137,6 @@ b <- a + geom_point(aes(x=date, y=PCR_test_positief,
 b
 ```
 
-![COVID in Nederland](Cumulatieve confirmed COVID-19 cases and deaths in the Netherlands.jpg)
-
 ## Prevalentie cijfers COVID-19 in Benelux en Duitsland
 
 In figuur 2 is de evolutie van de prevalentiecijfers te lezen van positieve PCR-tests in de Benelux, inclusief Duitsland vanaf 27 februari 2020 tot en met 6 december 2021.
