@@ -124,7 +124,7 @@ Covid and Statistics/Interpreting a covid 19 test result Jessica Watson bmj.m180
 
 In figuur 1 is de evolutie van de prevalentiecijfers te lezen van positieve PCR-tests in Nederland vanaf 27 februari 2020 tot en met 6 december 2021. 
 
-```{r fig.cap = "Figuur 1: Dagen op de x-as vanaf 27 februari 2020 tot en met 6 december 2021 in Nederland."}
+```{r fig.cap = "Dagen op de x-as vanaf 27 februari 2020 tot en met 6 december 2021 in Nederland."}
 a <- ggplot(data=Netherlands)
 b <- a + geom_point(aes(x=date, y=PCR_test_positief, 
                   colour=country), size=1.2) +
@@ -143,7 +143,7 @@ b
 
 In figuur 2 is de evolutie van de prevalentiecijfers te lezen van positieve PCR-tests in de Benelux, inclusief Duitsland vanaf 27 februari 2020 tot en met 6 december 2021.
 
-```{r fig.cap= "Figuur 2: Dagen op de x-as vanaf 27 februari 2020 tot en met 6 december 2021 in Benelux en Duitsland."}
+```{r fig.cap= "Dagen op de x-as vanaf 27 februari 2020 tot en met 6 december 2021 in Benelux en Duitsland."}
 c <- ggplot(data=Benelux)
 d <- c + geom_point(aes(x=date, y=PCR_test_positief, 
                   colour=country), size=1.2) +
@@ -158,7 +158,7 @@ d
 
 ## Regressie Prevalentie positieve tests COVID-19 in Nederland
 
-```{r fig.cap = "Figuur 3: Loess line voor prevalentie COVID-19 in Nederland"}
+```{r fig.cap = "Loess line voor prevalentie COVID-19 in Nederland"}
 xyplot(PCR_test_positief ~ date,
       data = Netherlands,
       type = c("p", "smooth"),
