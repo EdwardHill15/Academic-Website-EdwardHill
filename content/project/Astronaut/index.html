@@ -1,0 +1,353 @@
+---
+title: "Julia_Silge_Astronaut"
+author: "Edward Hill"
+date: "11-12-2021"
+output: html_document
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="bagging-with-tidymodels-and-tidytuesday-astronaut-missions" class="section level1">
+<h1>Bagging with tidymodels and #TidyTuesday astronaut missions</h1>
+<div class="figure">
+<img src="https://camo.githubusercontent.com/0a314236743bc0528d179be764b4cee792254597dc9dd326465fef99d52a760f/68747470733a2f2f696d616765732e756e73706c6173682e636f6d2f70686f746f2d313434373433333836353935382d6634303266353632623834333f69786c69623d72622d312e322e3126697869643d65794a6863484266615751694f6a45794d446439266175746f3d666f726d6174266669743d63726f7026773d3133353226713d3830" alt="" />
+<p class="caption">Astronaut data from Julia Silge</p>
+</div>
+<p>Lately I’ve been publishing screencasts demonstrating how to use the tidymodels framework, from first steps in modeling to how to evaluate complex models. Today’s screencast focuses on bagging using this week’s #TidyTuesday dataset on astronaut missions.</p>
+<p>Here is the code I used in the video, for those who prefer reading instead of or in addition to video.</p>
+<div id="explore-the-data" class="section level2">
+<h2>Explore the data</h2>
+<pre class="r"><code>astronauts &lt;- read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-14/astronauts.csv&quot;)</code></pre>
+<pre><code>## Rows: 1277 Columns: 24</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr (11): name, original_name, sex, nationality, military_civilian, selectio...
+## dbl (13): id, number, nationwide_number, year_of_birth, year_of_selection, m...</code></pre>
+<pre><code>## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>astronauts %&gt;%
+  count(in_orbit, sort = TRUE)</code></pre>
+<pre><code>## # A tibble: 289 x 2
+##    in_orbit      n
+##    &lt;chr&gt;     &lt;int&gt;
+##  1 ISS         174
+##  2 Mir          71
+##  3 Salyut 6     24
+##  4 Salyut 7     24
+##  5 STS-42        8
+##  6 explosion     7
+##  7 STS-103       7
+##  8 STS-107       7
+##  9 STS-109       7
+## 10 STS-110       7
+## # ... with 279 more rows</code></pre>
+<pre class="r"><code>head(astronauts, 10)</code></pre>
+<pre><code>## # A tibble: 10 x 24
+##       id number nationwide_number name      original_name    sex   year_of_birth
+##    &lt;dbl&gt;  &lt;dbl&gt;             &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;         &lt;dbl&gt;
+##  1     1      1                 1 Gagarin,~ &lt;U+0413&gt;&lt;U+0410&gt;&lt;U+0413&gt;&lt;U+0410&gt;&lt;U+0420&gt;&lt;U+0418&gt;&lt;U+041D&gt; &lt;U+042E&gt;&lt;U+0440&gt;&lt;U+0438&gt;&lt;U+0439&gt; &lt;U+0410&gt;&lt;U+043B&gt;~ male           1934
+##  2     2      2                 2 Titov, G~ &lt;U+0422&gt;&lt;U+0418&gt;&lt;U+0422&gt;&lt;U+041E&gt;&lt;U+0412&gt; &lt;U+0413&gt;&lt;U+0435&gt;&lt;U+0440&gt;&lt;U+043C&gt;&lt;U+0430&gt;&lt;U+043D&gt; &lt;U+0421&gt;&lt;U+0442&gt;~ male           1935
+##  3     3      3                 1 Glenn, J~ Glenn, John H.,~ male           1921
+##  4     4      3                 1 Glenn, J~ Glenn, John H.,~ male           1921
+##  5     5      4                 2 Carpente~ Carpenter, M. S~ male           1925
+##  6     6      5                 2 Nikolaye~ &lt;U+041D&gt;&lt;U+0418&gt;&lt;U+041A&gt;&lt;U+041E&gt;&lt;U+041B&gt;&lt;U+0410&gt;&lt;U+0415&gt;&lt;U+0412&gt; &lt;U+0410&gt;&lt;U+043D&gt;&lt;U+0434&gt;&lt;U+0440&gt;&lt;U+0438&gt;&lt;U+044F&gt;~ male           1929
+##  7     7      5                 2 Nikolaye~ &lt;U+041D&gt;&lt;U+0418&gt;&lt;U+041A&gt;&lt;U+041E&gt;&lt;U+041B&gt;&lt;U+0410&gt;&lt;U+0415&gt;&lt;U+0412&gt; &lt;U+0410&gt;&lt;U+043D&gt;&lt;U+0434&gt;&lt;U+0440&gt;&lt;U+0438&gt;&lt;U+044F&gt;~ male           1929
+##  8     8      6                 4 Popovich~ &lt;U+041F&gt;&lt;U+041E&gt;&lt;U+041F&gt;&lt;U+041E&gt;&lt;U+0412&gt;&lt;U+0418&gt;&lt;U+0427&gt; &lt;U+041F&gt;&lt;U+0430&gt;&lt;U+0432&gt;&lt;U+0435&gt;&lt;U+043B&gt; &lt;U+0420&gt;~ male           1930
+##  9     9      6                 4 Popovich~ &lt;U+041F&gt;&lt;U+041E&gt;&lt;U+041F&gt;&lt;U+041E&gt;&lt;U+0412&gt;&lt;U+0418&gt;&lt;U+0427&gt; &lt;U+041F&gt;&lt;U+0430&gt;&lt;U+0432&gt;&lt;U+0435&gt;&lt;U+043B&gt; &lt;U+0420&gt;~ male           1930
+## 10    10      7                 3 Schirra,~ Schirra, Walter~ male           1923
+## # ... with 17 more variables: nationality &lt;chr&gt;, military_civilian &lt;chr&gt;,
+## #   selection &lt;chr&gt;, year_of_selection &lt;dbl&gt;, mission_number &lt;dbl&gt;,
+## #   total_number_of_missions &lt;dbl&gt;, occupation &lt;chr&gt;, year_of_mission &lt;dbl&gt;,
+## #   mission_title &lt;chr&gt;, ascend_shuttle &lt;chr&gt;, in_orbit &lt;chr&gt;,
+## #   descend_shuttle &lt;chr&gt;, hours_mission &lt;dbl&gt;, total_hrs_sum &lt;dbl&gt;,
+## #   field21 &lt;dbl&gt;, eva_hrs_mission &lt;dbl&gt;, total_eva_hrs &lt;dbl&gt;</code></pre>
+<p>How has the duration of missions changed over time?</p>
+<pre class="r"><code>astronauts %&gt;%
+  mutate(
+    year_of_mission = 10 * (year_of_mission %/% 10),
+    year_of_mission = factor(year_of_mission)
+  ) %&gt;%
+  ggplot(aes(year_of_mission, hours_mission,
+    fill = year_of_mission, color = year_of_mission
+  )) +
+  geom_boxplot(alpha = 0.2, size = 1.5, show.legend = FALSE) +
+  scale_y_log10() +
+  labs(x = NULL, y = &quot;Duration of mission in hours&quot;)</code></pre>
+<pre><code>## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
+<pre><code>## Warning: Removed 6 rows containing non-finite values (stat_boxplot).</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>This duration is what we want to build a model to predict, using the other information in this per-astronaut-per-mission dataset. Let’s get ready for modeling next, by bucketing some of the spacecraft together (such as all the space shuttle missions) and taking the logarithm of the mission length.</p>
+<pre class="r"><code>astronauts_df &lt;- astronauts %&gt;%
+  select(
+    name, mission_title, hours_mission,
+    military_civilian, occupation, year_of_mission, in_orbit
+  ) %&gt;%
+  mutate(
+    in_orbit = case_when(
+      str_detect(in_orbit, &quot;^Salyut&quot;) ~ &quot;Salyut&quot;,
+      str_detect(in_orbit, &quot;^STS&quot;) ~ &quot;STS&quot;,
+      TRUE ~ in_orbit
+    ),
+    occupation = str_to_lower(occupation)
+  ) %&gt;%
+  filter(hours_mission &gt; 0) %&gt;%
+  mutate(hours_mission = log(hours_mission)) %&gt;%
+  na.omit()</code></pre>
+<p>It may make more sense to perform transformations like taking the logarithm of the outcome during data cleaning, before feature engineering and using any tidymodels packages like recipes. This kind of transformation is deterministic and can cause problems for tuning and resampling.</p>
+</div>
+<div id="build-a-model" class="section level2">
+<h2>Build a model</h2>
+<p>We can start by loading the tidymodels metapackage, and splitting our data into training and testing sets.</p>
+<pre class="r"><code>library(tidymodels)
+
+set.seed(123)
+astro_split &lt;- initial_split(astronauts_df, strata = hours_mission)
+astro_train &lt;- training(astro_split)
+astro_test &lt;- testing(astro_split)</code></pre>
+<p>Next, let’s preprocess our data to get it ready for modeling.</p>
+<pre class="r"><code>astro_recipe &lt;- recipe(hours_mission ~ ., data = astro_train) %&gt;%
+  update_role(name, mission_title, new_role = &quot;id&quot;) %&gt;%
+  step_other(occupation, in_orbit,
+    threshold = 0.005, other = &quot;Other&quot;
+  ) %&gt;%
+  step_dummy(all_nominal(), -has_role(&quot;id&quot;))</code></pre>
+<p>Let’s walk through the steps in this recipe.</p>
+<ul>
+<li>First, we must tell the recipe() what our model is going to be (using a formula here) and what data we are using.</li>
+<li>Next, update the role for the two columns that are not predictors or outcome. This way, we can keep them in the data for identification later.</li>
+<li>There are a lot of different occupations and spacecraft in this dataset, so let’s collapse some of the less frequently occurring levels into an “Other” category, for each predictor.</li>
+<li>Finally, we can create indicator variables.</li>
+</ul>
+<p>We’re going to use this recipe in a workflow() so we don’t need to stress about whether to prep() or not.</p>
+<pre class="r"><code>astro_wf &lt;- workflow() %&gt;%
+  add_recipe(astro_recipe)
+
+astro_wf</code></pre>
+<pre><code>## == Workflow ====================================================================
+## Preprocessor: Recipe
+## Model: None
+## 
+## -- Preprocessor ----------------------------------------------------------------
+## 2 Recipe Steps
+## 
+## * step_other()
+## * step_dummy()</code></pre>
+<p>For this analysis, we are going to build a bagging, i.e. bootstrap aggregating, model. This is an ensembling and model averaging method that:</p>
+<ul>
+<li>improves accuracy and stability</li>
+<li>reduces overfitting and variance</li>
+</ul>
+<p>In tidymodels, you can create bagging ensemble models with baguette, a parsnip-adjacent package. The baguette functions create new bootstrap training sets by sampling with replacement and then fit a model to each new training set. These models are combined by averaging the predictions for the regression case, like what we have here (by voting, for classification).</p>
+<p>Let’s make two bagged models, one with decision trees and one with MARS models.</p>
+<pre class="r"><code>library(baguette)</code></pre>
+<pre><code>## Warning: package &#39;baguette&#39; was built under R version 4.1.2</code></pre>
+<pre class="r"><code>tree_spec &lt;- bag_tree() %&gt;%
+  set_engine(&quot;rpart&quot;, times = 25) %&gt;%
+  set_mode(&quot;regression&quot;)
+
+tree_spec</code></pre>
+<pre><code>## Bagged Decision Tree Model Specification (regression)
+## 
+## Main Arguments:
+##   cost_complexity = 0
+##   min_n = 2
+## 
+## Engine-Specific Arguments:
+##   times = 25
+## 
+## Computational engine: rpart</code></pre>
+<pre class="r"><code>mars_spec &lt;- bag_mars() %&gt;%
+  set_engine(&quot;earth&quot;, times = 25) %&gt;%
+  set_mode(&quot;regression&quot;)
+
+mars_spec</code></pre>
+<pre><code>## Bagged MARS Model Specification (regression)
+## 
+## Engine-Specific Arguments:
+##   times = 25
+## 
+## Computational engine: earth</code></pre>
+<p>Let’s fit these models to the training data.</p>
+<pre class="r"><code>tree_rs &lt;- astro_wf %&gt;%
+  add_model(tree_spec) %&gt;%
+  fit(astro_train)
+
+tree_rs</code></pre>
+<pre><code>## == Workflow [trained] ==========================================================
+## Preprocessor: Recipe
+## Model: bag_tree()
+## 
+## -- Preprocessor ----------------------------------------------------------------
+## 2 Recipe Steps
+## 
+## * step_other()
+## * step_dummy()
+## 
+## -- Model -----------------------------------------------------------------------
+## Bagged CART (regression with 25 members)
+## 
+## Variable importance scores include:
+## 
+## # A tibble: 13 x 4
+##    term                             value std.error  used
+##    &lt;chr&gt;                            &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;
+##  1 year_of_mission                  799.      28.9     25
+##  2 in_orbit_Other                   439.      48.0     25
+##  3 occupation_flight.engineer       284.      30.8     25
+##  4 in_orbit_STS                     265.      23.4     25
+##  5 in_orbit_Mir                     161.      16.4     25
+##  6 in_orbit_Salyut                   91.9      7.99    25
+##  7 occupation_pilot                  73.5     16.3     25
+##  8 occupation_msp                    71.6      7.11    25
+##  9 occupation_other..space.tourist.  44.1      4.04    25
+## 10 military_civilian_military        37.6      3.29    25
+## 11 occupation_psp                    19.5      4.39    25
+## 12 occupation_Other                  18.9      2.58    21
+## 13 in_orbit_Mir.EP                   11.5      2.47    25</code></pre>
+<pre class="r"><code>mars_rs &lt;- astro_wf %&gt;%
+  add_model(mars_spec) %&gt;%
+  fit(astro_train)
+
+mars_rs</code></pre>
+<pre><code>## == Workflow [trained] ==========================================================
+## Preprocessor: Recipe
+## Model: bag_mars()
+## 
+## -- Preprocessor ----------------------------------------------------------------
+## 2 Recipe Steps
+## 
+## * step_other()
+## * step_dummy()
+## 
+## -- Model -----------------------------------------------------------------------
+## Bagged MARS (regression with 25 members)
+## 
+## Variable importance scores include:
+## 
+## # A tibble: 13 x 4
+##    term                               value std.error  used
+##    &lt;chr&gt;                              &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;
+##  1 in_orbit_STS                     100         0        25
+##  2 in_orbit_Other                    91.6       1.80     25
+##  3 year_of_mission                   63.8       4.41     25
+##  4 in_orbit_Mir.EP                   29.7       1.74     25
+##  5 in_orbit_Salyut                   24.4       2.60     24
+##  6 occupation_Other                   7.41      1.19     14
+##  7 military_civilian_military         4.91      0.551    15
+##  8 occupation_flight.engineer         2.80      0         1
+##  9 in_orbit_Mir                       0.666     0.668     4
+## 10 occupation_msp                     0.372     0.353     3
+## 11 occupation_other..space.tourist.   0.293     0         1
+## 12 occupation_pilot                   0.236     0         1
+## 13 occupation_psp                     0.172     0         1</code></pre>
+<p>The models return aggregated variable importance scores, and we can see that the spacecraft and year are importance in both models.</p>
+</div>
+<div id="evaluate-model" class="section level2">
+<h2>Evaluate model</h2>
+<p>Let’s evaluate how well these two models did by evaluating performance on the test data.</p>
+<pre class="r"><code>test_rs &lt;- astro_test %&gt;%
+  bind_cols(predict(tree_rs, astro_test)) %&gt;%
+  rename(.pred_tree = .pred) %&gt;%
+  bind_cols(predict(mars_rs, astro_test)) %&gt;%
+  rename(.pred_mars = .pred)
+
+test_rs</code></pre>
+<pre><code>## # A tibble: 318 x 9
+##    name  mission_title hours_mission military_civili~ occupation year_of_mission
+##    &lt;chr&gt; &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;                &lt;dbl&gt;
+##  1 Tito~ Vostok 2               3.22 military         pilot                 1961
+##  2 Glen~ MA-6                   1.61 military         pilot                 1962
+##  3 Glen~ STS-95                 5.36 military         psp                   1998
+##  4 Niko~ Soyuz 9                6.05 military         pilot                 1970
+##  5 Popo~ Soyuz 14               5.93 military         commander             1974
+##  6 Byko~ Soyuz 31/29            5.24 military         commander             1978
+##  7 Koma~ Soyuz 1                3.29 military         commander             1967
+##  8 Leon~ Voskhod 2              3.26 military         pilot                 1965
+##  9 Borm~ Gemini 7               5.80 military         commander             1965
+## 10 Borm~ Apollo 8               4.99 military         commander             1968
+## # ... with 308 more rows, and 3 more variables: in_orbit &lt;chr&gt;,
+## #   .pred_tree &lt;dbl&gt;, .pred_mars &lt;dbl&gt;</code></pre>
+<p>We can use the metrics() function from yardstick for both sets of predictions</p>
+<pre class="r"><code>test_rs %&gt;%
+  metrics(hours_mission, .pred_tree)</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard       0.663
+## 2 rsq     standard       0.769
+## 3 mae     standard       0.356</code></pre>
+<pre class="r"><code>test_rs %&gt;%
+  metrics(hours_mission, .pred_mars)</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   .metric .estimator .estimate
+##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+## 1 rmse    standard       0.712
+## 2 rsq     standard       0.733
+## 3 mae     standard       0.384</code></pre>
+<p>Both models performed pretty similarly.</p>
+<p>Let’s make some “new” astronauts to understand the kinds of predictions our bagged tree model is making.</p>
+<pre class="r"><code>new_astronauts &lt;- crossing(
+  in_orbit = fct_inorder(c(&quot;ISS&quot;, &quot;STS&quot;, &quot;Mir&quot;, &quot;Other&quot;)),
+  military_civilian = &quot;civilian&quot;,
+  occupation = &quot;Other&quot;,
+  year_of_mission = seq(1960, 2020, by = 10),
+  name = &quot;id&quot;, mission_title = &quot;id&quot;
+) %&gt;%
+  filter(
+    !(in_orbit == &quot;ISS&quot; &amp; year_of_mission &lt; 2000),
+    !(in_orbit == &quot;Mir&quot; &amp; year_of_mission &lt; 1990),
+    !(in_orbit == &quot;STS&quot; &amp; year_of_mission &gt; 2010),
+    !(in_orbit == &quot;STS&quot; &amp; year_of_mission &lt; 1980)
+  )
+
+new_astronauts</code></pre>
+<pre><code>## # A tibble: 18 x 6
+##    in_orbit military_civilian occupation year_of_mission name  mission_title
+##    &lt;fct&gt;    &lt;chr&gt;             &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        
+##  1 ISS      civilian          Other                 2000 id    id           
+##  2 ISS      civilian          Other                 2010 id    id           
+##  3 ISS      civilian          Other                 2020 id    id           
+##  4 STS      civilian          Other                 1980 id    id           
+##  5 STS      civilian          Other                 1990 id    id           
+##  6 STS      civilian          Other                 2000 id    id           
+##  7 STS      civilian          Other                 2010 id    id           
+##  8 Mir      civilian          Other                 1990 id    id           
+##  9 Mir      civilian          Other                 2000 id    id           
+## 10 Mir      civilian          Other                 2010 id    id           
+## 11 Mir      civilian          Other                 2020 id    id           
+## 12 Other    civilian          Other                 1960 id    id           
+## 13 Other    civilian          Other                 1970 id    id           
+## 14 Other    civilian          Other                 1980 id    id           
+## 15 Other    civilian          Other                 1990 id    id           
+## 16 Other    civilian          Other                 2000 id    id           
+## 17 Other    civilian          Other                 2010 id    id           
+## 18 Other    civilian          Other                 2020 id    id</code></pre>
+<p>Let’s start with the decision tree model.</p>
+<pre class="r"><code>new_astronauts %&gt;%
+  bind_cols(predict(tree_rs, new_astronauts)) %&gt;%
+  ggplot(aes(year_of_mission, .pred, color = in_orbit)) +
+  geom_line(size = 1.5, alpha = 0.7) +
+  geom_point(size = 2) +
+  labs(
+    x = NULL, y = &quot;Duration of mission in hours (predicted, on log scale)&quot;,
+    color = NULL, title = &quot;How did the duration of astronauts&#39; missions change over time?&quot;,
+    subtitle = &quot;Predicted using bagged decision tree model&quot;
+  )</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>What about the MARS model?</p>
+<pre class="r"><code>new_astronauts %&gt;%
+  bind_cols(predict(mars_rs, new_astronauts)) %&gt;%
+  ggplot(aes(year_of_mission, .pred, color = in_orbit)) +
+  geom_line(size = 1.5, alpha = 0.7) +
+  geom_point(size = 2) +
+  labs(
+    x = NULL, y = &quot;Duration of mission in hours (predicted, on log scale)&quot;,
+    color = NULL, title = &quot;How did the duration of astronauts&#39; missions change over time?&quot;,
+    subtitle = &quot;Predicted using bagged MARS model&quot;
+  )</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>You can really get a sense of how these two kinds of models work from the differences in these plots (tree vs. splines with knots), but from both, we can see that missions to space stations are longer, and missions in that “Other” category change characteristics over time pretty dramatically.</p>
+</div>
+</div>
