@@ -1,0 +1,281 @@
+---
+title: "Pumpkins"
+author: "Edward Hill"
+date: "11-12-2021"
+output: html_document
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>Let’s train a model for<a href="rfordatascience/tidytuesday">giant pumpkins</a>, predicting a giant pumpkin weight from other characteristics</p>
+<div id="explore-data" class="section level2">
+<h2>Explore Data</h2>
+<pre class="r"><code>library(tidyverse)
+
+pumpkins_raw &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-19/pumpkins.csv&quot;)</code></pre>
+<pre><code>## Rows: 28065 Columns: 14</code></pre>
+<pre><code>## -- Column specification --------------------------------------------------------
+## Delimiter: &quot;,&quot;
+## chr (14): id, place, weight_lbs, grower_name, city, state_prov, country, gpc...</code></pre>
+<pre><code>## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>pumpkins &lt;-
+  pumpkins_raw %&gt;%
+  separate(id, into = c(&quot;year&quot;, &quot;type&quot;)) %&gt;%
+  mutate(across(c(year, weight_lbs, ott, place), parse_number)) %&gt;%
+  filter(type == &quot;P&quot;) %&gt;%
+  select(weight_lbs, year, place, ott, gpc_site, country)</code></pre>
+<pre><code>## Warning: 2327 parsing failures.
+## row col expected actual
+##  13  -- a number    EXH
+##  36  -- a number    EXH
+##  58  -- a number    EXH
+##  60  -- a number    EXH
+##  61  -- a number    EXH
+## ... ... ........ ......
+## See problems(...) for more details.</code></pre>
+<pre class="r"><code>pumpkins</code></pre>
+<pre><code>## # A tibble: 15,965 x 6
+##    weight_lbs  year place   ott gpc_site                             country    
+##         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;                                &lt;chr&gt;      
+##  1      2032   2013     1   475 Uesugi Farms Weigh-off               United Sta~
+##  2      1985   2013     2   453 Safeway World Championship Pumpkin ~ United Sta~
+##  3      1894   2013     3   445 Safeway World Championship Pumpkin ~ United Sta~
+##  4      1874.  2013     4   436 Elk Grove Giant Pumpkin Festival     United Sta~
+##  5      1813   2013     5   430 The Great Howard Dill Giant Pumpkin~ Canada     
+##  6      1791   2013     6   431 Elk Grove Giant Pumpkin Festival     United Sta~
+##  7      1784   2013     7   445 Uesugi Farms Weigh-off               United Sta~
+##  8      1784.  2013     8   434 Stillwater Harvestfest               United Sta~
+##  9      1780.  2013     9   422 Stillwater Harvestfest               United Sta~
+## 10      1766.  2013    10   425 Durham Fair Weigh-Off                United Sta~
+## # ... with 15,955 more rows</code></pre>
+<p>The main relationship here is between the volume/size of the pumpkin (measured via “over-the-top inches”) and weight.</p>
+<pre class="r"><code>pumpkins %&gt;%
+  filter(ott &gt; 20, ott &lt; 1e3) %&gt;%
+  ggplot(aes(ott, weight_lbs, color = place)) +
+  geom_point(alpha = 0.2, size = 1.1) +
+  labs(x = &quot;over-the-top inches&quot;, y = &quot;weight (lbs)&quot;) +
+  scale_color_viridis_c()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Big, heavy pumpkins placed closer to winning at the competitions, naturally!</p>
+<p>Has there been any shift in this relationship over time?</p>
+<pre class="r"><code>pumpkins %&gt;%
+  filter(ott &gt; 20, ott &lt; 1e3) %&gt;%
+  ggplot(aes(ott, weight_lbs)) +
+  geom_point(alpha = 0.2, size = 1.1, color = &quot;gray60&quot;) +
+  geom_smooth(aes(color = factor(year)),
+    method = lm, formula = y ~ splines::bs(x, 3),
+    se = FALSE, size = 1.5, alpha = 0.6
+  ) +
+  labs(x = &quot;over-the-top inches&quot;, y = &quot;weight (lbs)&quot;, color = NULL) +
+  scale_color_viridis_d()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Hard to say, I think.</p>
+<p>Which countries produced more or less massive pumpkins?</p>
+<pre class="r"><code>pumpkins %&gt;%
+  mutate(
+    country = fct_lump(country, n = 10),
+    country = fct_reorder(country, weight_lbs)
+  ) %&gt;%
+  ggplot(aes(country, weight_lbs, color = country)) +
+  geom_boxplot(outlier.colour = NA) +
+  geom_jitter(alpha = 0.1, width = 0.15) +
+  labs(x = NULL, y = &quot;weight (lbs)&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="build-and-fit-a-workflow-set" class="section level2">
+<h2>Build and fit a workflow set</h2>
+<pre class="r"><code>library(tidymodels)</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;tune&#39;:
+##   method                   from   
+##   required_pkgs.model_spec parsnip</code></pre>
+<pre><code>## -- Attaching packages -------------------------------------- tidymodels 0.1.4 --</code></pre>
+<pre><code>## v broom        0.7.10     v rsample      0.1.1 
+## v dials        0.0.10     v tune         0.1.6 
+## v infer        1.0.0      v workflows    0.2.4 
+## v modeldata    0.1.1      v workflowsets 0.1.0 
+## v parsnip      0.1.7      v yardstick    0.0.9 
+## v recipes      0.1.17</code></pre>
+<pre><code>## Warning: package &#39;rsample&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Warning: package &#39;yardstick&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## -- Conflicts ----------------------------------------- tidymodels_conflicts() --
+## x scales::discard() masks purrr::discard()
+## x dplyr::filter()   masks stats::filter()
+## x recipes::fixed()  masks stringr::fixed()
+## x dplyr::lag()      masks stats::lag()
+## x yardstick::spec() masks readr::spec()
+## x recipes::step()   masks stats::step()
+## * Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+<pre class="r"><code>set.seed(123)
+pumpkin_split &lt;- pumpkins %&gt;%
+  filter(ott &gt; 20, ott &lt; 1e3) %&gt;%
+  initial_split(strata = weight_lbs)
+
+pumpkin_train &lt;- training(pumpkin_split)
+pumpkin_test &lt;- testing(pumpkin_split)
+
+set.seed(234)
+pumpkin_folds &lt;- vfold_cv(pumpkin_train, strata = weight_lbs)
+pumpkin_folds</code></pre>
+<pre><code>## #  10-fold cross-validation using stratification 
+## # A tibble: 10 x 2
+##    splits             id    
+##    &lt;list&gt;             &lt;chr&gt; 
+##  1 &lt;split [8954/996]&gt; Fold01
+##  2 &lt;split [8954/996]&gt; Fold02
+##  3 &lt;split [8954/996]&gt; Fold03
+##  4 &lt;split [8954/996]&gt; Fold04
+##  5 &lt;split [8954/996]&gt; Fold05
+##  6 &lt;split [8954/996]&gt; Fold06
+##  7 &lt;split [8955/995]&gt; Fold07
+##  8 &lt;split [8956/994]&gt; Fold08
+##  9 &lt;split [8957/993]&gt; Fold09
+## 10 &lt;split [8958/992]&gt; Fold10</code></pre>
+<p>Next, let’s create three data preprocessing recipes: one that only pools infrequently used factors levels, one that also creates indicator variables, and finally one that also creates spline terms for over-the-top inches.</p>
+<pre class="r"><code>base_rec &lt;-
+  recipe(weight_lbs ~ ott + year + country + gpc_site,
+    data = pumpkin_train) %&gt;%
+  step_other(country, gpc_site, threshold = 0.02)
+
+ind_rec &lt;-
+  base_rec %&gt;%
+  step_dummy(all_nominal_predictors())
+
+spline_rec &lt;-
+  ind_rec %&gt;%
+  step_bs(ott)</code></pre>
+<p>Then, let’s create three model specifications: a random forest model, a MARS model, and a linear model.</p>
+<pre class="r"><code>rf_spec &lt;-
+  rand_forest(trees = 1e3) %&gt;%
+  set_mode(&quot;regression&quot;) %&gt;%
+  set_engine(&quot;ranger&quot;)
+
+mars_spec &lt;-
+  mars() %&gt;%
+  set_mode(&quot;regression&quot;) %&gt;%
+  set_engine(&quot;earth&quot;)
+
+lm_spec &lt;- linear_reg()</code></pre>
+<p>Now it’s time to put the preprocessing and models together in a workflow_set().</p>
+<pre class="r"><code>pumpkin_set &lt;-
+  workflow_set(
+    list(base_rec, ind_rec, spline_rec),
+    list(rf_spec, mars_spec, lm_spec),
+    cross = FALSE)
+pumpkin_set</code></pre>
+<pre><code>## # A workflow set/tibble: 3 x 4
+##   wflow_id             info             option    result    
+##   &lt;chr&gt;                &lt;list&gt;           &lt;list&gt;    &lt;list&gt;    
+## 1 recipe_1_rand_forest &lt;tibble [1 x 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 2 recipe_2_mars        &lt;tibble [1 x 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;
+## 3 recipe_3_linear_reg  &lt;tibble [1 x 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;</code></pre>
+<p>We use cross = FALSE because we don’t want every combination of these components, only three options to try. Let’s fit these possible candidates to our resamples to see which one performs best.</p>
+<pre class="r"><code>library(doParallel)</code></pre>
+<pre><code>## Warning: package &#39;doParallel&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Loading required package: foreach</code></pre>
+<pre><code>## 
+## Attaching package: &#39;foreach&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:purrr&#39;:
+## 
+##     accumulate, when</code></pre>
+<pre><code>## Loading required package: iterators</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre class="r"><code>library(ranger)</code></pre>
+<pre><code>## Warning: package &#39;ranger&#39; was built under R version 4.1.2</code></pre>
+<pre class="r"><code>library(earth)</code></pre>
+<pre><code>## Warning: package &#39;earth&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Loading required package: Formula</code></pre>
+<pre><code>## Loading required package: plotmo</code></pre>
+<pre><code>## Warning: package &#39;plotmo&#39; was built under R version 4.1.2</code></pre>
+<pre><code>## Loading required package: plotrix</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotrix&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:scales&#39;:
+## 
+##     rescale</code></pre>
+<pre><code>## Loading required package: TeachingDemos</code></pre>
+<pre><code>## Warning: package &#39;TeachingDemos&#39; was built under R version 4.1.2</code></pre>
+<pre class="r"><code>registerDoParallel()
+set.seed(2021)
+
+pumpkin_rs &lt;-
+  workflow_map(
+    pumpkin_set,
+    &quot;fit_resamples&quot;,
+    resamples = pumpkin_folds
+  )
+
+pumpkin_rs</code></pre>
+<pre><code>## # A workflow set/tibble: 3 x 4
+##   wflow_id             info             option    result   
+##   &lt;chr&gt;                &lt;list&gt;           &lt;list&gt;    &lt;list&gt;   
+## 1 recipe_1_rand_forest &lt;tibble [1 x 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;
+## 2 recipe_2_mars        &lt;tibble [1 x 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;
+## 3 recipe_3_linear_reg  &lt;tibble [1 x 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</code></pre>
+</div>
+<div id="evaluate-workflow-set" class="section level2">
+<h2>Evaluate workflow set</h2>
+<p>How did our three candidates do?</p>
+<pre class="r"><code>autoplot(pumpkin_rs)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>There is not much difference between the three options, and if anything, our linear model with spline feature engineering maybe did better. This is nice because it’s a simpler model!</p>
+<pre class="r"><code>collect_metrics(pumpkin_rs)</code></pre>
+<pre><code>## # A tibble: 6 x 9
+##   wflow_id    .config     preproc model  .metric .estimator   mean     n std_err
+##   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;
+## 1 recipe_1_r~ Preprocess~ recipe  rand_~ rmse    standard   86.2      10 1.05e+0
+## 2 recipe_1_r~ Preprocess~ recipe  rand_~ rsq     standard    0.968    10 9.53e-4
+## 3 recipe_2_m~ Preprocess~ recipe  mars   rmse    standard   83.8      10 1.92e+0
+## 4 recipe_2_m~ Preprocess~ recipe  mars   rsq     standard    0.969    10 1.67e-3
+## 5 recipe_3_l~ Preprocess~ recipe  linea~ rmse    standard   82.4      10 2.27e+0
+## 6 recipe_3_l~ Preprocess~ recipe  linea~ rsq     standard    0.970    10 1.97e-3</code></pre>
+<p>We can extract the workflow we want to use and fit it to our training data.</p>
+<pre class="r"><code>final_fit &lt;-
+  extract_workflow(pumpkin_rs, &quot;recipe_3_linear_reg&quot;) %&gt;%
+  fit(pumpkin_train)
+tidy(final_fit)</code></pre>
+<pre><code>## # A tibble: 15 x 5
+##    term                                   estimate std.error statistic   p.value
+##    &lt;chr&gt;                                     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1 (Intercept)                            -9731.     675.      -14.4   1.30e- 46
+##  2 year                                       4.89     0.334    14.6   5.03e- 48
+##  3 country_Canada                             9.29     6.12      1.52  1.29e-  1
+##  4 country_Germany                          -11.5      6.68     -1.71  8.64e-  2
+##  5 country_Italy                              8.12     7.02      1.16  2.47e-  1
+##  6 country_United.States                     11.9      5.66      2.11  3.53e-  2
+##  7 country_other                            -10.7      6.33     -1.69  9.13e-  2
+##  8 gpc_site_Elk.Grove.Giant.Pumpkin.Fest~    -7.81     7.70     -1.01  3.10e-  1
+##  9 gpc_site_Ohio.Valley.Giant.Pumpkin.Gr~    21.1      7.80      2.70  6.89e-  3
+## 10 gpc_site_Stillwater.Harvestfest           11.6      7.87      1.48  1.40e-  1
+## 11 gpc_site_Wiegemeisterschaft.Berlin.Br~     1.51     8.07      0.187 8.51e-  1
+## 12 gpc_site_other                             1.41     5.60      0.251 8.02e-  1
+## 13 ott_bs_1                                -345.      36.3      -9.50  2.49e- 21
+## 14 ott_bs_2                                 450.      11.9      37.9   2.75e-293
+## 15 ott_bs_3                                2585.      25.6     101.    0</code></pre>
+<p>We can use an object like this to predict, such as on the test data like predict(final_fit, pumpkin_test), or we can examine the model parameters.</p>
+<pre class="r"><code>tidy(final_fit) %&gt;%
+  arrange(-abs(estimate))</code></pre>
+<pre><code>## # A tibble: 15 x 5
+##    term                                   estimate std.error statistic   p.value
+##    &lt;chr&gt;                                     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1 (Intercept)                            -9731.     675.      -14.4   1.30e- 46
+##  2 ott_bs_3                                2585.      25.6     101.    0        
+##  3 ott_bs_2                                 450.      11.9      37.9   2.75e-293
+##  4 ott_bs_1                                -345.      36.3      -9.50  2.49e- 21
+##  5 gpc_site_Ohio.Valley.Giant.Pumpkin.Gr~    21.1      7.80      2.70  6.89e-  3
+##  6 country_United.States                     11.9      5.66      2.11  3.53e-  2
+##  7 gpc_site_Stillwater.Harvestfest           11.6      7.87      1.48  1.40e-  1
+##  8 country_Germany                          -11.5      6.68     -1.71  8.64e-  2
+##  9 country_other                            -10.7      6.33     -1.69  9.13e-  2
+## 10 country_Canada                             9.29     6.12      1.52  1.29e-  1
+## 11 country_Italy                              8.12     7.02      1.16  2.47e-  1
+## 12 gpc_site_Elk.Grove.Giant.Pumpkin.Fest~    -7.81     7.70     -1.01  3.10e-  1
+## 13 year                                       4.89     0.334    14.6   5.03e- 48
+## 14 gpc_site_Wiegemeisterschaft.Berlin.Br~     1.51     8.07      0.187 8.51e-  1
+## 15 gpc_site_other                             1.41     5.60      0.251 8.02e-  1</code></pre>
+<p>The spline terms are by far the most important, but we do see evidence of certain sites and countries being predictive of weight (either up or down) as well as a small trend of heavier pumpkins with year.</p>
+<p>Don’t forget to take the tidymodels survey for 2022 priorities!</p>
+</div>
