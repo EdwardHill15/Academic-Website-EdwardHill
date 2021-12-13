@@ -31,7 +31,7 @@ Evidential virtues
 
 1. *Evidential accuracy*: A theory (T) fits the empirical evidence well (regardless ofcausal claims).
 2. *Causal adequacy*: T's causal factors plausibly produce the effects (evidence) in need of explanation.
-3. *Explanatory depth*: T excels in causal history depth or in other depth measures suchas the range of counterfactual questions that its law-like generalizations answer regarding the item being explained.
+3. *Explanatory depth*: T excels in causal history depth or in other depth measures such as the range of counter factual questions that its law-like generalizations answer regarding the item being explained.
 
 Coherential virtues
 
@@ -54,9 +54,9 @@ I will show how this theoretical virtue taxonomy is more illuminating than other
 
 In response to critics who charged him with undermining science's rationality, Kuhn wrote:
 
->I have implicitly assumed that, whatever their initial source, the criteria or values deployed in theory-choice are fixed once and for all, unaffected by their transition from one theory to another. Roughly speaking, but only roughly speaking, I take that to be the case. If the list of relevant values be kept short ... and if their specification be left vague, then such values ... are permanent attributes of science (@Kuhn1977, p. 335).
+>I have implicitly assumed that, whatever their initial source, the criteria or values deployed in theory-choice are fixed once and for all, unaffected by their transition from one theory to another. Roughly speaking, but only roughly speaking, I take that to be the case. If the list of relevant values be kept short and if their specification be left vague, then such values are permanent attributes of science (@Kuhn1977, p. 335).
 
-Kuhn listed five such permanent values (theoretical virtues) operative in theory choice: **accuracy**, **consistency**, **scope** (unification), **simplicity**, and **fruitfulness** (p. 332). He persisted in this understanding during his final years of work, affirming that the theoretical virtues are as "necessarily permanent, for abandoning them would be abandoning science" @Kuhn1993, p.338. Neither Kuhn, nor most others contributing to this topic,have proposed a classification system that indicates how the different theoretical virtues relate to each other.
+Kuhn listed five such permanent values (theoretical virtues) operative in theory choice: **accuracy**, **consistency**, **scope** (unification), **simplicity**, and **fruitfulness** (p. 332). He persisted in this understanding during his final years of work, affirming that the theoretical virtues are as "necessarily permanent, for abandoning them would be abandoning science" @Kuhn1993, p.338. Neither Kuhn, nor most others contributing to this topic, have proposed a classification system that indicates how the different theoretical virtues relate to each other.
 
 [@Laudan1984] ventured slightly into theory virtue systematization (only at a pro-posed taxonomic level above my four classes) by arguing that most theoretical virtues in scientific practice fail to possess strict epistemic credentials as traditionally conceived in analytic epistemology. Rather, he classified all theory virtues within the larger category of cognitive virtues or values, of which the epistemic virtues form a proper subset @Laudan2004, p.19. Many philosophers of science use the term epistemic in a broad sense that often approximates Laudan cognitive when talking about theory virtues. For example, @Reiss2014 cite Laudan in this regard and recommend this broader sense of epistemic (as do I):
 
