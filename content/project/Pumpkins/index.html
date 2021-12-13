@@ -8,7 +8,8 @@ output: html_document
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>Let’s train a model for<a href="rfordatascience/tidytuesday">giant pumpkins</a>, predicting a giant pumpkin weight from other characteristics</p>
+<p>From a blog-post by Julia Silge <a href="https://juliasilge.com/blog/giant-pumpkins/">Julia Silge’s blog of Tidymodels Giant Pumpkins</a></p>
+<p>Let’s train a model for <a href="rfordatascience/tidytuesday">giant pumpkins</a>, predicting a giant pumpkin weight from other characteristics</p>
 <div id="explore-data" class="section level2">
 <h2>Explore Data</h2>
 <pre class="r"><code>library(tidyverse)
@@ -108,7 +109,7 @@ pumpkins_raw &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rford
 ## x dplyr::lag()      masks stats::lag()
 ## x yardstick::spec() masks readr::spec()
 ## x recipes::step()   masks stats::step()
-## * Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+## * Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
 <pre class="r"><code>set.seed(123)
 pumpkin_split &lt;- pumpkins %&gt;%
   filter(ott &gt; 20, ott &lt; 1e3) %&gt;%

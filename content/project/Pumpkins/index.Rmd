@@ -11,7 +11,9 @@ library(tidyverse)
 library(ggplot2)
 ```
 
-Let's train a model for[giant pumpkins](rfordatascience/tidytuesday), predicting a giant pumpkin weight from other characteristics
+From a blog-post by Julia Silge [Julia Silge's blog of Tidymodels Giant Pumpkins](https://juliasilge.com/blog/giant-pumpkins/)
+
+Let's train a model for [giant pumpkins](rfordatascience/tidytuesday), predicting a giant pumpkin weight from other characteristics
 
 ## Explore Data
 
