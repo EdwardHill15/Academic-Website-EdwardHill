@@ -9,14 +9,18 @@ output:
     fig_caption: yes
     keep_md: yes
     theme: journal
-bibliography: theoretical virtues.bib
-biblio-style: apalike
+bibliography: ["theoretical virtues.bib"]
+biblio-style: "apalike"
 link-citations: true
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 **Abstract**  There are at least twelve major virtues of good theories: evidential accuracy, causal adequacy, explanatory depth, internal consistency, internal coherence, universal coherence, beauty, simplicity, unification, durability, fruitfulness, and applicability. These virtues are best classified into four classes: evidential, coherential, aesthetic, and diachronic. Each virtue class contains at least three virtues that sequentially follow a repeating pattern of progressive disclosure and expansion. Systematizing the theoretical virtues in this manner clarifies each virtue and suggests how they might have a coordinated and cumulative role in theory formation and evaluation across the disciplines with allowance for discipline specific modification. An informal and flexible logic of theory choice is in the making here. Evidential accuracy (empirical fit), according to my systematization, is not a largely isolated trait of good theories, as some (realists and antirealists) have made it out to be. Rather, it bears multifaceted relationships, constituting significant epistemic entanglements, with other theoretical virtues.
 
-**Keywords**  Theoretical virtues� � Inference to the best explanation � Epistemic 
+**Keywords**  Theoretical virtues � Inference to the best explanation � Epistemic 
 value � Aesthetics � Prediction � Science and technology relations
 
 # 1 Introduction
@@ -54,9 +58,9 @@ In response to critics who charged him with undermining science's rationality, K
 
 Kuhn listed five such permanent values (theoretical virtues) operative in theory choice: **accuracy**, **consistency**, **scope** (unification), **simplicity**, and **fruitfulness** (p. 332). He persisted in this understanding during his final years of work, affirming that the theoretical virtues are as "necessarily permanent, for abandoning them would be abandoning science" [@Kuhn1993, p. 338]. Neither Kuhn, nor most others contributing to this topic,have proposed a classification system that indicates how the different theoretical virtues relate to each other.
 
-[@Laudan1984] ventured slightly into theory virtue systematization (only at a pro-posed taxonomic level above my four “classes”) by arguing that most theoretical virtues in scientific practice fail to possess strict “epistemic” credentials as traditionally conceived in analytic epistemology. Rather, he classified all theory virtues within the larger category of “cognitive virtues or values,” of which “the epistemic virtues form a proper ... subset” @Laudan2004, p. 19. Many philosophers of science use the term “epistemic” in a broad sense that often approximates Laudan’s “cognitive” when talking about theory virtues. For example, [@Reiss2014] cite Laudan in this regard and recommend this broader sense of “epistemic” (as do I):
+[@Laudan1984] ventured slightly into theory virtue systematization (only at a pro-posed taxonomic level above my four classes) by arguing that most theoretical virtues in scientific practice fail to possess strict epistemic credentials as traditionally conceived in analytic epistemology. Rather, he classified all theory virtues within the larger category of cognitive virtues or values, of which the epistemic virtues form a proper ... subset @Laudan2004, p. 19. Many philosophers of science use the term epistemic in a broad sense that often approximates Laudan cognitive when talking about theory virtues. For example, [@Reiss2014] cite Laudan in this regard and recommend this broader sense of epistemic (as do I):
 
->Sometimes epistemic values are regarded as a subset of cognitive values andidentified with values such as empirical adequacy and internal consistency that directly bear on the veracity of a scientific theory [@Laudan2004]. Values such as scope and explanatory power would then count as cognitive values that express scientific desiderata, but without properly epistemic implications. We have decided, however, to adopt a broader reading of “epistemic” where truthis not the only aim of scientific inquiry, but supplemented by providing causal mechanisms, finding natural laws, creating understanding, etc. In this sense, values such as scope or explanatory power contribute to achieving our epistemic goals. Neat distinctions between strictly truth-conducive and purely cognitive scientific values are hard to come by (see [@Douglas2014] for a classification attempt). 
+>Sometimes epistemic values are regarded as a subset of cognitive values andidentified with values such as empirical adequacy and internal consistency that directly bear on the veracity of a scientific theory [@Laudan2004]. Values such as scope and explanatory power would then count as cognitive values that express scientific desiderata, but without properly epistemic implications. We have decided, however, to adopt a broader reading of epistemic where truthis not the only aim of scientific inquiry, but supplemented by providing causal mechanisms, finding natural laws, creating understanding, etc. In this sense, values such as scope or explanatory power contribute to achieving our epistemic goals. Neat distinctions between strictly truth-conducive and purely cognitive scientific values are hard to come by (see [@Douglas2014] for a classification attempt). 
 
 
 # References
