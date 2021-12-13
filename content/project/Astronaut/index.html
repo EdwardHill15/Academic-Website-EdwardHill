@@ -15,7 +15,6 @@ output: html_document
 <p>Here is the code I used in the video, for those who prefer reading instead of or in addition to video.</p>
 <div id="explore-the-data" class="section level2">
 <h2>Explore the data</h2>
-<pre class="r"><code>astronauts &lt;- read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-07-14/astronauts.csv&quot;)</code></pre>
 <pre><code>## Rows: 1277 Columns: 24</code></pre>
 <pre><code>## -- Column specification --------------------------------------------------------
 ## Delimiter: &quot;,&quot;
@@ -24,8 +23,6 @@ output: html_document
 <pre><code>## 
 ## i Use `spec()` to retrieve the full column specification for this data.
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>astronauts %&gt;%
-  count(in_orbit, sort = TRUE)</code></pre>
 <pre><code>## # A tibble: 289 x 2
 ##    in_orbit      n
 ##    &lt;chr&gt;     &lt;int&gt;
@@ -40,7 +37,6 @@ output: html_document
 ##  9 STS-109       7
 ## 10 STS-110       7
 ## # ... with 279 more rows</code></pre>
-<pre class="r"><code>head(astronauts, 10)</code></pre>
 <pre><code>## # A tibble: 10 x 24
 ##       id number nationwide_number name      original_name    sex   year_of_birth
 ##    &lt;dbl&gt;  &lt;dbl&gt;             &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;         &lt;dbl&gt;
@@ -61,55 +57,16 @@ output: html_document
 ## #   descend_shuttle &lt;chr&gt;, hours_mission &lt;dbl&gt;, total_hrs_sum &lt;dbl&gt;,
 ## #   field21 &lt;dbl&gt;, eva_hrs_mission &lt;dbl&gt;, total_eva_hrs &lt;dbl&gt;</code></pre>
 <p>How has the duration of missions changed over time?</p>
-<pre class="r"><code>astronauts %&gt;%
-  mutate(
-    year_of_mission = 10 * (year_of_mission %/% 10),
-    year_of_mission = factor(year_of_mission)
-  ) %&gt;%
-  ggplot(aes(year_of_mission, hours_mission,
-    fill = year_of_mission, color = year_of_mission
-  )) +
-  geom_boxplot(alpha = 0.2, size = 1.5, show.legend = FALSE) +
-  scale_y_log10() +
-  labs(x = NULL, y = &quot;Duration of mission in hours&quot;)</code></pre>
 <pre><code>## Warning: Transformation introduced infinite values in continuous y-axis</code></pre>
 <pre><code>## Warning: Removed 6 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>This duration is what we want to build a model to predict, using the other information in this per-astronaut-per-mission dataset. Let’s get ready for modeling next, by bucketing some of the spacecraft together (such as all the space shuttle missions) and taking the logarithm of the mission length.</p>
-<pre class="r"><code>astronauts_df &lt;- astronauts %&gt;%
-  select(
-    name, mission_title, hours_mission,
-    military_civilian, occupation, year_of_mission, in_orbit
-  ) %&gt;%
-  mutate(
-    in_orbit = case_when(
-      str_detect(in_orbit, &quot;^Salyut&quot;) ~ &quot;Salyut&quot;,
-      str_detect(in_orbit, &quot;^STS&quot;) ~ &quot;STS&quot;,
-      TRUE ~ in_orbit
-    ),
-    occupation = str_to_lower(occupation)
-  ) %&gt;%
-  filter(hours_mission &gt; 0) %&gt;%
-  mutate(hours_mission = log(hours_mission)) %&gt;%
-  na.omit()</code></pre>
 <p>It may make more sense to perform transformations like taking the logarithm of the outcome during data cleaning, before feature engineering and using any tidymodels packages like recipes. This kind of transformation is deterministic and can cause problems for tuning and resampling.</p>
 </div>
 <div id="build-a-model" class="section level2">
 <h2>Build a model</h2>
 <p>We can start by loading the tidymodels metapackage, and splitting our data into training and testing sets.</p>
-<pre class="r"><code>library(tidymodels)
-
-set.seed(123)
-astro_split &lt;- initial_split(astronauts_df, strata = hours_mission)
-astro_train &lt;- training(astro_split)
-astro_test &lt;- testing(astro_split)</code></pre>
 <p>Next, let’s preprocess our data to get it ready for modeling.</p>
-<pre class="r"><code>astro_recipe &lt;- recipe(hours_mission ~ ., data = astro_train) %&gt;%
-  update_role(name, mission_title, new_role = &quot;id&quot;) %&gt;%
-  step_other(occupation, in_orbit,
-    threshold = 0.005, other = &quot;Other&quot;
-  ) %&gt;%
-  step_dummy(all_nominal(), -has_role(&quot;id&quot;))</code></pre>
 <p>Let’s walk through the steps in this recipe.</p>
 <ul>
 <li>First, we must tell the recipe() what our model is going to be (using a formula here) and what data we are using.</li>
@@ -118,10 +75,6 @@ astro_test &lt;- testing(astro_split)</code></pre>
 <li>Finally, we can create indicator variables.</li>
 </ul>
 <p>We’re going to use this recipe in a workflow() so we don’t need to stress about whether to prep() or not.</p>
-<pre class="r"><code>astro_wf &lt;- workflow() %&gt;%
-  add_recipe(astro_recipe)
-
-astro_wf</code></pre>
 <pre><code>## == Workflow ====================================================================
 ## Preprocessor: Recipe
 ## Model: None
@@ -138,13 +91,7 @@ astro_wf</code></pre>
 </ul>
 <p>In tidymodels, you can create bagging ensemble models with baguette, a parsnip-adjacent package. The baguette functions create new bootstrap training sets by sampling with replacement and then fit a model to each new training set. These models are combined by averaging the predictions for the regression case, like what we have here (by voting, for classification).</p>
 <p>Let’s make two bagged models, one with decision trees and one with MARS models.</p>
-<pre class="r"><code>library(baguette)</code></pre>
 <pre><code>## Warning: package &#39;baguette&#39; was built under R version 4.1.2</code></pre>
-<pre class="r"><code>tree_spec &lt;- bag_tree() %&gt;%
-  set_engine(&quot;rpart&quot;, times = 25) %&gt;%
-  set_mode(&quot;regression&quot;)
-
-tree_spec</code></pre>
 <pre><code>## Bagged Decision Tree Model Specification (regression)
 ## 
 ## Main Arguments:
@@ -155,11 +102,6 @@ tree_spec</code></pre>
 ##   times = 25
 ## 
 ## Computational engine: rpart</code></pre>
-<pre class="r"><code>mars_spec &lt;- bag_mars() %&gt;%
-  set_engine(&quot;earth&quot;, times = 25) %&gt;%
-  set_mode(&quot;regression&quot;)
-
-mars_spec</code></pre>
 <pre><code>## Bagged MARS Model Specification (regression)
 ## 
 ## Engine-Specific Arguments:
@@ -167,11 +109,6 @@ mars_spec</code></pre>
 ## 
 ## Computational engine: earth</code></pre>
 <p>Let’s fit these models to the training data.</p>
-<pre class="r"><code>tree_rs &lt;- astro_wf %&gt;%
-  add_model(tree_spec) %&gt;%
-  fit(astro_train)
-
-tree_rs</code></pre>
 <pre><code>## == Workflow [trained] ==========================================================
 ## Preprocessor: Recipe
 ## Model: bag_tree()
@@ -203,11 +140,6 @@ tree_rs</code></pre>
 ## 11 occupation_psp                    19.5      4.39    25
 ## 12 occupation_Other                  18.9      2.58    21
 ## 13 in_orbit_Mir.EP                   11.5      2.47    25</code></pre>
-<pre class="r"><code>mars_rs &lt;- astro_wf %&gt;%
-  add_model(mars_spec) %&gt;%
-  fit(astro_train)
-
-mars_rs</code></pre>
 <pre><code>## == Workflow [trained] ==========================================================
 ## Preprocessor: Recipe
 ## Model: bag_mars()
@@ -244,13 +176,6 @@ mars_rs</code></pre>
 <div id="evaluate-model" class="section level2">
 <h2>Evaluate model</h2>
 <p>Let’s evaluate how well these two models did by evaluating performance on the test data.</p>
-<pre class="r"><code>test_rs &lt;- astro_test %&gt;%
-  bind_cols(predict(tree_rs, astro_test)) %&gt;%
-  rename(.pred_tree = .pred) %&gt;%
-  bind_cols(predict(mars_rs, astro_test)) %&gt;%
-  rename(.pred_mars = .pred)
-
-test_rs</code></pre>
 <pre><code>## # A tibble: 318 x 9
 ##    name  mission_title hours_mission military_civili~ occupation year_of_mission
 ##    &lt;chr&gt; &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;                &lt;dbl&gt;
@@ -267,16 +192,12 @@ test_rs</code></pre>
 ## # ... with 308 more rows, and 3 more variables: in_orbit &lt;chr&gt;,
 ## #   .pred_tree &lt;dbl&gt;, .pred_mars &lt;dbl&gt;</code></pre>
 <p>We can use the metrics() function from yardstick for both sets of predictions</p>
-<pre class="r"><code>test_rs %&gt;%
-  metrics(hours_mission, .pred_tree)</code></pre>
 <pre><code>## # A tibble: 3 x 3
 ##   .metric .estimator .estimate
 ##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
 ## 1 rmse    standard       0.663
 ## 2 rsq     standard       0.769
 ## 3 mae     standard       0.356</code></pre>
-<pre class="r"><code>test_rs %&gt;%
-  metrics(hours_mission, .pred_mars)</code></pre>
 <pre><code>## # A tibble: 3 x 3
 ##   .metric .estimator .estimate
 ##   &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
@@ -285,21 +206,6 @@ test_rs</code></pre>
 ## 3 mae     standard       0.384</code></pre>
 <p>Both models performed pretty similarly.</p>
 <p>Let’s make some “new” astronauts to understand the kinds of predictions our bagged tree model is making.</p>
-<pre class="r"><code>new_astronauts &lt;- crossing(
-  in_orbit = fct_inorder(c(&quot;ISS&quot;, &quot;STS&quot;, &quot;Mir&quot;, &quot;Other&quot;)),
-  military_civilian = &quot;civilian&quot;,
-  occupation = &quot;Other&quot;,
-  year_of_mission = seq(1960, 2020, by = 10),
-  name = &quot;id&quot;, mission_title = &quot;id&quot;
-) %&gt;%
-  filter(
-    !(in_orbit == &quot;ISS&quot; &amp; year_of_mission &lt; 2000),
-    !(in_orbit == &quot;Mir&quot; &amp; year_of_mission &lt; 1990),
-    !(in_orbit == &quot;STS&quot; &amp; year_of_mission &gt; 2010),
-    !(in_orbit == &quot;STS&quot; &amp; year_of_mission &lt; 1980)
-  )
-
-new_astronauts</code></pre>
 <pre><code>## # A tibble: 18 x 6
 ##    in_orbit military_civilian occupation year_of_mission name  mission_title
 ##    &lt;fct&gt;    &lt;chr&gt;             &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;        
@@ -322,28 +228,8 @@ new_astronauts</code></pre>
 ## 17 Other    civilian          Other                 2010 id    id           
 ## 18 Other    civilian          Other                 2020 id    id</code></pre>
 <p>Let’s start with the decision tree model.</p>
-<pre class="r"><code>new_astronauts %&gt;%
-  bind_cols(predict(tree_rs, new_astronauts)) %&gt;%
-  ggplot(aes(year_of_mission, .pred, color = in_orbit)) +
-  geom_line(size = 1.5, alpha = 0.7) +
-  geom_point(size = 2) +
-  labs(
-    x = NULL, y = &quot;Duration of mission in hours (predicted, on log scale)&quot;,
-    color = NULL, title = &quot;How did the duration of astronauts&#39; missions change over time?&quot;,
-    subtitle = &quot;Predicted using bagged decision tree model&quot;
-  )</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>What about the MARS model?</p>
-<pre class="r"><code>new_astronauts %&gt;%
-  bind_cols(predict(mars_rs, new_astronauts)) %&gt;%
-  ggplot(aes(year_of_mission, .pred, color = in_orbit)) +
-  geom_line(size = 1.5, alpha = 0.7) +
-  geom_point(size = 2) +
-  labs(
-    x = NULL, y = &quot;Duration of mission in hours (predicted, on log scale)&quot;,
-    color = NULL, title = &quot;How did the duration of astronauts&#39; missions change over time?&quot;,
-    subtitle = &quot;Predicted using bagged MARS model&quot;
-  )</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>You can really get a sense of how these two kinds of models work from the differences in these plots (tree vs. splines with knots), but from both, we can see that missions to space stations are longer, and missions in that “Other” category change characteristics over time pretty dramatically.</p>
 </div>

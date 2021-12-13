@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 library(readr)
 library(tidyverse)
 library(tidymodels)
@@ -33,7 +33,7 @@ head(astronauts, 10)
 ```
 How has the duration of missions changed over time?
 
-```{r}
+```{r, echo = FALSE}
 astronauts %>%
   mutate(
     year_of_mission = 10 * (year_of_mission %/% 10),
@@ -49,7 +49,7 @@ astronauts %>%
 
 This duration is what we want to build a model to predict, using the other information in this per-astronaut-per-mission dataset. Let’s get ready for modeling next, by bucketing some of the spacecraft together (such as all the space shuttle missions) and taking the logarithm of the mission length.
 
-```{r}
+```{r, echo = FALSE}
 astronauts_df <- astronauts %>%
   select(
     name, mission_title, hours_mission,
@@ -75,7 +75,7 @@ It may make more sense to perform transformations like taking the logarithm of t
 We can start by loading the tidymodels metapackage, and splitting our data into training and testing sets.
 
 
-```{r}
+```{r, echo = FALSE}
 library(tidymodels)
 
 set.seed(123)
@@ -106,7 +106,7 @@ Let’s walk through the steps in this recipe.
 
 We’re going to use this recipe in a workflow() so we don’t need to stress about whether to prep() or not.
 
-```{r}
+```{r, echo = FALSE}
 astro_wf <- workflow() %>%
   add_recipe(astro_recipe)
 
@@ -122,7 +122,7 @@ In tidymodels, you can create bagging ensemble models with baguette, a parsnip-a
 
 Let’s make two bagged models, one with decision trees and one with MARS models.
 
-```{r}
+```{r, echo = FALSE}
 library(baguette)
 
 tree_spec <- bag_tree() %>%
@@ -132,7 +132,7 @@ tree_spec <- bag_tree() %>%
 tree_spec
 ```
 
-```{r}
+```{r, echo = FALSE}
 mars_spec <- bag_mars() %>%
   set_engine("earth", times = 25) %>%
   set_mode("regression")
@@ -142,7 +142,7 @@ mars_spec
 
 Let’s fit these models to the training data.
 
-```{r}
+```{r, echo = FALSE}
 tree_rs <- astro_wf %>%
   add_model(tree_spec) %>%
   fit(astro_train)
