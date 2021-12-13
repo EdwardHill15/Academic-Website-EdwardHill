@@ -45,7 +45,7 @@ Coherential virtues
 Diachronic virtues
 
 10. *Durability*: T has survived testing by successful prediction or plausible accommodation of new data.
-11. *Fruitfulness*: T has generated additional discovery by means such as successful novel prediction, unification,2and non ad hoc theoretical elaboration.
+11. *Fruitfulness*: T has generated additional discovery by means such as successful novel prediction, unification, and non ad hoc theoretical elaboration.
 12. *Applicability*: T has guided strategic action or control, such as in science-based technology
 
 I will show how this theoretical virtue taxonomy is more illuminating than others(e.g., it helped me identify the virtue of applicability, which is absent from earlier lists and taxonomies). Previous attempts at understanding and classifying the theoretical virtues would have been more successful had they attended to all of these major virtues and their relations. After a glimpse at early attempts to understand and classify the theoretical virtues, we will explore each of the virtues and their taxonomic relations.
