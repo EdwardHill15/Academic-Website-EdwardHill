@@ -20,8 +20,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Abstract**  There are at least twelve major virtues of good theories: evidential accuracy, causal adequacy, explanatory depth, internal consistency, internal coherence, universal coherence, beauty, simplicity, unification, durability, fruitfulness, and applicability. These virtues are best classified into four classes: evidential, coherential, aesthetic, and diachronic. Each virtue class contains at least three virtues that sequentially follow a repeating pattern of progressive disclosure and expansion. Systematizing the theoretical virtues in this manner clarifies each virtue and suggests how they might have a coordinated and cumulative role in theory formation and evaluation across the disciplines with allowance for discipline specific modification. An informal and flexible logic of theory choice is in the making here. Evidential accuracy (empirical fit), according to my systematization, is not a largely isolated trait of good theories, as some (realists and antirealists) have made it out to be. Rather, it bears multifaceted relationships, constituting significant epistemic entanglements, with other theoretical virtues.
 
-**Keywords**  Theoretical virtues · Inference to the best explanation · Epistemic 
-value · Aesthetics · Prediction · Science and technology relations
+**Keywords**  Theoretical virtues - Inference to the best explanation - Epistemic 
+value - Aesthetics - Prediction - Science and technology - relations
 
 # 1 Introduction
 
