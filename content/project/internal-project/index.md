@@ -1,6 +1,6 @@
 ---
-date: "2016-04-27T00:00:00Z"
-external_link: ""
+date: "17-12-2021"
+external_link: "file:///D:/Onderzoek/Consciousness_Russia/Epistemic-values.html"
 image:
   caption: Photo by rawpixel on Unsplash
   focal_point: Smart
