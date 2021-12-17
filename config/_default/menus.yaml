@@ -16,11 +16,11 @@ main:
   - name: Blogs
     url: '#projects'
     weight: 40
-  - name: Notes
-    url: '#notes'
-    weight: 50
   - name: Publications
     url: '#publications'
+    weight: 50
+  - name: Notes
+    url: '#notes'
     weight: 60
   - name: Contact
     url: '#contact'
