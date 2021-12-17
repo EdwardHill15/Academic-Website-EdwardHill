@@ -1,5 +1,5 @@
 ---
-title: "Notes"
+title: "notes"
 author: "Edward Hill"
 date: "13-12-2021"
 output: 
