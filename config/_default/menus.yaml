@@ -16,6 +16,9 @@ main:
   - name: Blogs
     url: '#projects'
     weight: 40
+  - name: Notes
+    url: '#notes'
+    weight: 50
   - name: Publications
     url: '#publications'
     weight: 60
