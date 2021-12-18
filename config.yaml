@@ -6,7 +6,7 @@ theme: "starter-hugo-academic"
 
 title: Edward Hillenaar # Website name
 baseurl: 'edwardhill15-academic.netlify.app' # Website URL
-copyright: '' # Footer text, e.g. '© {year} Me'
+copyright: '2021 Copyright by Edward Hillenaar' # Footer text, e.g. '© {year} Me'
 
 ############################
 ## LANGUAGE
