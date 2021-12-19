@@ -1,0 +1,166 @@
+---
+title: "Age of the Universe using linear regression"
+author: "Edward Hill"
+date: "19-12-2021"
+output: 
+  html_document:
+      theme: journal
+bibliography: R_GAM.bib
+biblio-style: apalike
+link-citations: yes
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The big-bang model implies that the universe expands uniformly according to Hubble’s law:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p><math display = 'block'>
+<mrow>
+<mi>y</mi>
+<mtext fontfamily='Times New Roman'> </mtext>
+<mo>=</mo>
+<mtext fontfamily='Times New Roman'> </mtext>
+<mi>β</mi>
+<mi>x</mi>
+</mrow>
+</math></p>
+<p>Where <mi>y</mi> is the relative velocity of any two galaxies seperated by distance <mi>x</mi>, and <mi>β</mi> is “Hubble’s constant.”</p>
+<p><mi>β</mi> is the approximate age of the universe, but <mi>β</mi> is unknown and must be estimated from observations of <mi>x</mi> and <mi>y</mi>.</p>
+<p>See; <span class="citation"><a href="#ref-Wood2017" role="doc-biblioref">Wood</a> (<a href="#ref-Wood2017" role="doc-biblioref">2017</a>)</span>, p. 1-9</p>
+<div id="data-hubble" class="section level2">
+<h2>Data hubble:</h2>
+<pre><code>##      Galaxy    y     x
+## 1   NGC0300  133  2.00
+## 2   NGC0925  664  9.16
+## 3  NGC1326A 1794 16.14
+## 4   NGC1365 1594 17.95
+## 5   NGC1425 1473 21.88
+## 6   NGC2403  278  3.22
+## 7   NGC2541  714 11.22
+## 8   NGC2090  882 11.75
+## 9   NGC3031   80  3.63
+## 10  NGC3198  772 13.80
+## 11  NGC3351  642 10.00
+## 12  NGC3368  768 10.52
+## 13  NGC3621  609  6.64
+## 14  NGC4321 1433 15.21
+## 15  NGC4414  619 17.70
+## 16 NGC4496A 1424 14.86
+## 17  NGC4548 1384 16.22
+## 18  NGC4535 1444 15.78
+## 19  NGC4536 1423 14.93
+## 20  NGC4639 1403 21.98
+## 21  NGC4725 1103 12.36
+## 22   IC4182  318  4.49
+## 23  NGC5253  232  3.15
+## 24  NGC7331  999 14.72</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x - 1, data = hubble)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -736.5 -132.5  -19.0  172.2  558.0 
+## 
+## Coefficients:
+##   Estimate Std. Error t value Pr(&gt;|t|)    
+## x   76.581      3.965   19.32 1.03e-15 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 258.9 on 23 degrees of freedom
+## Multiple R-squared:  0.9419, Adjusted R-squared:  0.9394 
+## F-statistic: 373.1 on 1 and 23 DF,  p-value: 1.032e-15</code></pre>
+<p>In this line I’ll give you the mean-value of y: 924.4.</p>
+<div id="plot-the-residuals-against-the-fitted-values" class="section level3">
+<h3>Plot the residuals against the fitted values</h3>
+<pre class="r"><code>plot(fitted(hub.mod),residuals(hub.mod),xlab=&quot;fitted values&quot;,ylab=&quot;residuals&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="omit-offending-points-and-produce-new-residual-plot" class="section level3">
+<h3>Omit offending points and produce new residual plot</h3>
+<pre class="r"><code>hub.mod1 &lt;- lm(y~x-1,data=hubble[-c(3,15),])
+summary(hub.mod1)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x - 1, data = hubble[-c(3, 15), ])
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -304.3 -141.9  -26.5  138.3  269.8 
+## 
+## Coefficients:
+##   Estimate Std. Error t value Pr(&gt;|t|)    
+## x    77.67       2.97   26.15   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 180.5 on 21 degrees of freedom
+## Multiple R-squared:  0.9702, Adjusted R-squared:  0.9688 
+## F-statistic: 683.8 on 1 and 21 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code>plot(fitted(hub.mod1),residuals(hub.mod1),xlab=&quot;fitted values&quot;,ylab=&quot;residuals&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="estimate-hubbles-constant" class="section level3">
+<h3>Estimate Hubble’s Constant</h3>
+<pre class="r"><code>hubble.const &lt;- c(coef(hub.mod),coef(hub.mod1))/3.09e19
+age &lt;- 1/hubble.const
+age</code></pre>
+<pre><code>##            x            x 
+## 4.034934e+17 3.978221e+17</code></pre>
+<pre class="r"><code>age/(60^2*24*365)</code></pre>
+<pre><code>##           x           x 
+## 12794692825 12614854757</code></pre>
+</div>
+<div id="adding-a-distributional-assumption" class="section level3">
+<h3>1.1.3 Adding a distributional assumption</h3>
+</div>
+<div id="testing-hypotheses-about-β-in-creationist-theory" class="section level3">
+<h3>Testing Hypotheses about <mi>β</mi> in Creationist Theory</h3>
+<pre class="r"><code>cs.hubble &lt;- 163000000
+t.stat&lt;-(coef(hub.mod1)-cs.hubble)/summary(hub.mod1)$coefficients[2]
+pt(t.stat,df=21)*2</code></pre>
+<pre><code>##             x 
+## 3.906388e-150</code></pre>
+</div>
+<div id="confidence-intervals" class="section level3">
+<h3>Confidence intervals</h3>
+<pre class="r"><code>sigb &lt;- summary(hub.mod1)$coefficients[2]
+h.ci&lt;-coef(hub.mod1)+qt(c(0.025,0.975),df=21)*sigb
+h.ci</code></pre>
+<pre><code>## [1] 71.49588 83.84995</code></pre>
+<pre class="r"><code>h.ci&lt;-h.ci*60^2*24*365.25/3.09e19 # convert to 1/years
+sort(1/h.ci)</code></pre>
+<pre><code>## [1] 11677548698 13695361072</code></pre>
+<p>Relevant literature;</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="citation">(<a href="#ref-Wood2017" role="doc-biblioref">Wood 2017</a>)</span></p></li>
+<li><p><span class="citation">(<a href="#ref-Crawley2013" role="doc-biblioref">Crawley 2013</a>)</span></p></li>
+<li><p><a href="https://github.com/EdwardHill15/Udemy_GAM/blob/main/Linear%20Regression%20GLMs%20and%20GAMs%20with%20R/other%20documentation/liberman_2005_OR_paper_AJE.PDF">How much more likely? The Implications for Odds Ratios for Probabilities by Liberman</a>
+<span class="citation">(<a href="#ref-Liberman2005" role="doc-biblioref">Liberman 2005</a>)</span></p></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Crawley2013" class="csl-entry">
+Crawley, Michael J. 2013. <em><span>The R Book</span></em>. Chichester, UK: John Wiley &amp; Sons.
+</div>
+<div id="ref-Liberman2005" class="csl-entry">
+Liberman, Akiva M. 2005. <span>“<span class="nocase">How much more likely? The implications of odds ratios for probabilities</span>.”</span> <em>American Journal of Evaluation</em> 26 (2): 253–66. <a href="https://doi.org/10.1177/1098214005275825">https://doi.org/10.1177/1098214005275825</a>.
+</div>
+<div id="ref-Wood2017" class="csl-entry">
+Wood, Simon N. 2017. <em><span class="nocase">Generalized Additive Models. An Introduction with R</span></em>. London; New York: Taylor &amp; Francis Group.
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Easiest way of writing mathematical equation in R Markdown See Youtube: <a href="https://www.youtube.com/watch?v=4I3PCDME5U8" class="uri">https://www.youtube.com/watch?v=4I3PCDME5U8</a>)<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
