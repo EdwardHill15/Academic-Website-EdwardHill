@@ -72,7 +72,6 @@ age
 age/(60^2*24*365)
 ```
 
-### 1.1.3 Adding a distributional assumption
 
 ### Testing Hypotheses about <mi>&beta;</mi> in Creationist Theory
 
