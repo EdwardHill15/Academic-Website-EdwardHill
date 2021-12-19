@@ -18,9 +18,10 @@ Mijn blog over de [waarnemingen aan 1048 type Ia supernovae](https://www.astrobl
 
 De Hubble constante werd eind jaren twintig van de vorige eeuw ingevoerd door de Amerikaanse sterrenkundige Edwin Hubble en dat deed hij middels deze wet, die stelt dat sterrenstelsels zich van elkaar verwijderen met een snelheid die evenredig is met hun onderlinge afstand:
 
-$$
+\begin{equation}
 H0 = v/d
-$$
+\end{equation}
+
 
 waarin $H0$ de Hubble constante op dit moment is, uitgedrukt in km/s/Mpc, d de afstand tot de aarde in megaparsec of Mpc (1 Mpc is ongeveer 3,26 miljoen lichtjaar) en $v$ de de snelheid (in km/s) waarmee het sterrenstelsel zich van ons verwijdert. Hubble nam enkele sterrenstelsels waar en zag ze door de gemeten roodverschuiving van de spectraallijnen van ons afbewegen (zie de grafiek hieronder), hetgeen hem tot de naar hem en de Belgische priester – sterrenkundige George Lemaître genoemde wet bracht.
 
