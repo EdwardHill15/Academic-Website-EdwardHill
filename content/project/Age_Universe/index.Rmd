@@ -29,7 +29,7 @@ The big-bang model implies that the universe expands uniformly according to [Hub
   </mrow>
 </math>
 
-Where <mi>y</mi> is the relative velocity of any two galaxies seperated by distance <mi>x</mi>, and <mi>&beta;</mi> is "Hubble's constant". in standard astrophysical notation <mi>y</mi> = <mi>v</mi>, <mi>x</mi> = <mi>d</mi> and <mi>&beta</mi> = <mi>H0</mi>.
+Where <mi>y</mi> is the relative velocity of any two galaxies seperated by distance <mi>x</mi>, and <mi>&beta;</mi> is "Hubble's constant". in standard astrophysical notation <mi>y</mi> = <mi>v</mi>, <mi>x</mi> = <mi>d</mi> and <mi>&beta;</mi> = <mi>H0</mi>.
 
 <mi>&beta;</mi> is the approximate age of the universe, but <mi>&beta;</mi> is unknown and must be estimated from observations of <mi>x</mi> and <mi>y</mi>. 
 
