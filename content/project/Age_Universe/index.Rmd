@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-The big-bang model implies that the universe expands uniformly according to Hubble's law:[^note1] 
+The big-bang model implies that the universe expands uniformly according to [Hubble's law](https://en.wikipedia.org/wiki/Hubble%27s_law).
 
 <math display = 'block'>
   <mrow>
