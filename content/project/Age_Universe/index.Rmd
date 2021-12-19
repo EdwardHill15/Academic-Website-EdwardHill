@@ -29,7 +29,7 @@ The big-bang model implies that the universe expands uniformly according to Hubb
   </mrow>
 </math>
 
-Where <mi>y</mi> is the relative velocity of any two galaxies seperated by distance <mi>x</mi>, and <mi>&beta;</mi> is "Hubble's constant". 
+Where <mi>y</mi> is the relative velocity of any two galaxies seperated by distance <mi>x</mi>, and <mi>&beta;</mi> is "Hubble's constant". in standard astrophysical notation <mi>y</mi> = <mi>v</mi>, <mi>x</mi> = <mi>d</mi> and <mi>&beta</mi> = <mi>H0</mi>.
 
 <mi>&beta;</mi> is the approximate age of the universe, but <mi>&beta;</mi> is unknown and must be estimated from observations of <mi>x</mi> and <mi>y</mi>. 
 
@@ -45,7 +45,9 @@ hub.mod <- lm(y~x-1,data=hubble)
 summary(hub.mod)
 ```
 
-In this line I'll give you the mean-value of y: `r round(mean(hubble$y),1)`. 
+[Hubble's Law](https://en.wikipedia.org/wiki/Hubble%27s_law), also known as the [Hubble-Lemaitre law](https://www.iau.org/news/pressreleases/detail/iau1812/?lang), is the observation in physical cosmology that galaxies are moving away from Earth at speeds proportional to their distance. In other words, the farther they are the faster they are moving away from Earth. The velocity of the galaxies has been determined by their redshift, a shift of the light they emit toward the red end of the visible spectrum.
+
+Hubble constant is most frequently quoted in (km/s)/Mpc, thus giving the speed in km/s of a galaxy 1 megaparsec (3.09 time 1019 km) away, and its value is about 70 (km/s)/Mpc. However, the SI unit of H0 is simply s^-1^, and the SI unit for the reciprocal of H0 is simply the second. The reciprocal of H0 is known as the Hubble time. The Hubble constant can also be interpreted as the relative rate of expansion. In this form H0 = 7%/Gyr, meaning that at the current rate of expansion it takes a billion years for an unbound structure to grow by 7%.
 
 ### Plot the residuals against the fitted values
 

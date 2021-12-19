@@ -26,7 +26,7 @@ link-citations: yes
 <mi>x</mi>
 </mrow>
 </math></p>
-<p>Where <mi>y</mi> is the relative velocity of any two galaxies seperated by distance <mi>x</mi>, and <mi>β</mi> is “Hubble’s constant.”</p>
+<p>Where <mi>y</mi> is the relative velocity of any two galaxies seperated by distance <mi>x</mi>, and <mi>β</mi> is “Hubble’s constant.” in standard astrophysical notation <mi>y</mi> = <mi>v</mi>, <mi>x</mi> = <mi>d</mi> and <mi>&amp;beta</mi> = <mi>H0</mi>.</p>
 <p><mi>β</mi> is the approximate age of the universe, but <mi>β</mi> is unknown and must be estimated from observations of <mi>x</mi> and <mi>y</mi>.</p>
 <p>See; <span class="citation"><a href="#ref-Wood2017" role="doc-biblioref">Wood</a> (<a href="#ref-Wood2017" role="doc-biblioref">2017</a>)</span>, p. 1-9</p>
 <div id="data-hubble" class="section level2">
@@ -73,7 +73,8 @@ link-citations: yes
 ## Residual standard error: 258.9 on 23 degrees of freedom
 ## Multiple R-squared:  0.9419, Adjusted R-squared:  0.9394 
 ## F-statistic: 373.1 on 1 and 23 DF,  p-value: 1.032e-15</code></pre>
-<p>In this line I’ll give you the mean-value of y: 924.4.</p>
+<p><a href="https://en.wikipedia.org/wiki/Hubble%27s_law">Hubble’s Law</a>, also known as the <a href="https://www.iau.org/news/pressreleases/detail/iau1812/?lang">Hubble-Lemaitre law</a>, is the observation in physical cosmology that galaxies are moving away from Earth at speeds proportional to their distance. In other words, the farther they are the faster they are moving away from Earth. The velocity of the galaxies has been determined by their redshift, a shift of the light they emit toward the red end of the visible spectrum.</p>
+<p>Hubble constant is most frequently quoted in (km/s)/Mpc, thus giving the speed in km/s of a galaxy 1 megaparsec (3.09 time 1019 km) away, and its value is about 70 (km/s)/Mpc. However, the SI unit of H0 is simply s<sup>-1</sup>, and the SI unit for the reciprocal of H0 is simply the second. The reciprocal of H0 is known as the Hubble time. The Hubble constant can also be interpreted as the relative rate of expansion. In this form H0 = 7%/Gyr, meaning that at the current rate of expansion it takes a billion years for an unbound structure to grow by 7%.</p>
 <div id="plot-the-residuals-against-the-fitted-values" class="section level3">
 <h3>Plot the residuals against the fitted values</h3>
 <pre class="r"><code>plot(fitted(hub.mod),residuals(hub.mod),xlab=&quot;fitted values&quot;,ylab=&quot;residuals&quot;)</code></pre>
