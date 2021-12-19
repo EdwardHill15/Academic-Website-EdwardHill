@@ -92,6 +92,8 @@ h.ci<-h.ci*60^2*24*365.25/3.09e19 # convert to 1/years
 sort(1/h.ci)
 ```
 
+Mean-value for <mi>v</mi> or <mi>y</mi> = `r round(mean(hubble$y),0)` km/s. 
+
 [^note1]: Easiest way of writing mathematical equation in R Markdown  See Youtube: https://www.youtube.com/watch?v=4I3PCDME5U8)
 
 Relevant literature;
