@@ -54,9 +54,9 @@ contact_links:
     link: 'https://gitlab.com/EdwardHill15'
   - icon: r-project
     icon_pack: fab 
-    name: Rstudio Cloud
+    name: Rstudio Projects
     link: 'https://rstudio.cloud/projects' 
-  - icon: researchgate  
+   - icon: researchgate  
     icon_pack: fab 
     name: ResearchGate
     link: 'https://www.researchgate.net/'
