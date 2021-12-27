@@ -29,10 +29,13 @@ social:
   link: /#contact
 - display:
     header: true
-  icon: twitter
+- icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
-  link: 'https://twitter.com/EdwardHill1512'
+- icon: facebook-f
+  icon_pack: fab
+  label: Follow me on facebook  
+  link: 'https://www.facebook.com/EdwardHillenaar'
 - icon: linkedin
   icon_pack: fab
   link: 'https://www.linkedin.com/in/visietotaal?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BIyLg5DWVS26zIXhC9gunCg%3D%3D'
