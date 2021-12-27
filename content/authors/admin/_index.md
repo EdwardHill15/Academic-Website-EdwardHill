@@ -42,6 +42,9 @@ social:
 - icon: gitlab
   icon_pack: fab
   link: 'https://gitlab.com/EdwardHill15' 
+- icon: researchgate
+  icon_pack: fab
+  link: 'https://www.researchgate.net/'
   
 superuser: true
 title: Edward Hillenaar
