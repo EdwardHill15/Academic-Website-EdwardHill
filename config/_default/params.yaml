@@ -52,7 +52,7 @@ contact_links:
     icon_pack: fab 
     name: Gitlab
     link: 'https://gitlab.com/EdwardHill15'
-  - icon: researcherid 
+  - icon: r-project
     icon_pack: fab 
     name: Rstudio Cloud
     link: 'https://rstudio.cloud/projects' 
@@ -60,7 +60,10 @@ contact_links:
     icon_pack: fab 
     name: ResearchGate
     link: 'https://www.researchgate.net/'
-    
+  - icon: mendeley 
+    icon_pack: fab 
+    name: Mendeley
+    link: 'https://www.mendeley.com/search/'
     
 # Site header
 

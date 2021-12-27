@@ -32,7 +32,7 @@ social:
 - icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
-- icon: facebook-f
+- icon: facebook
   icon_pack: fab
   label: Follow me on facebook  
   link: 'https://www.facebook.com/EdwardHillenaar'
