@@ -1,7 +1,7 @@
 ---
 title: "Prima Experientia"
 author: "Edward Hill"
-date: "30-12-2021"
+date: "31-12-2021"
 output: html_document
 ---
 
@@ -9,10 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-![](https://raw.githubusercontent.com/EdwardHill15/Data/main/graph_total.png)
+# Prima Experientia
 
-![](https://raw.githubusercontent.com/EdwardHill15/Data/main/barchart1_vrouw.png)
 
-![](https://raw.githubusercontent.com/EdwardHill15/Data/main/barchart1_man.png)
 
-![](https://raw.githubusercontent.com/EdwardHill15/Data/main/graph_m_f.png)
+
+
