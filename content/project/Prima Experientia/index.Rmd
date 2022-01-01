@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Prima Experientia
 
-
-
-
-
+![bar grafiek bewustzijn en nvm in de totale groep](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/bar_t_earthly.png)
+![boxplot bewustzijn en nvm in de totale groep](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/boxplot_t_natural.png)
+![scatterplot bewustzijn in relatie tot neg en som in de totale groep](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_t_natural.png)
+![man vrouw verschillen en bewustzijn in relatie tot neg en som](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_mf_natural.png)
