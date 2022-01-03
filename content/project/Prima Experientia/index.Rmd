@@ -15,3 +15,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ![boxplot bewustzijn en nvm in de totale groep](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/boxplot_t_natural.png)
 ![scatterplot bewustzijn in relatie tot neg en som in de totale groep](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_t_natural.png)
 ![man vrouw verschillen en bewustzijn in relatie tot neg en som](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_mf_natural.png)
+
+
+![jitterplot bewustzijn en lichamelijke klachten in de totale groep NVM](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/jitter_som.png)
+
+![Animatie van de relatie tussen bewustzijn en lichamelijke klachten in de NVM groep](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/bewustzijn_som.gif)
+
+
+
+
