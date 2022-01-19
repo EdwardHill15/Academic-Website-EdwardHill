@@ -19,16 +19,17 @@ In this ontology of consciousness, the reduction base is called "**Prima Experie
 
 # **Data**
 
-![bar grafiek bewustzijn en nvm in de totale groep](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/bar_t_earthly.png)
-![boxplot bewustzijn en nvm in de totale groep](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/boxplot_t_natural.png)
+![bar graph consciousness and nvm factors in total group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/bar2_t_earthly.png)
+![scatterplot consciousness in relation to negativism and somatization in total group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_t2_natural.png)
 ![scatterplot bewustzijn in relatie tot neg en som in de totale groep](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_t_natural.png)
 ![man vrouw verschillen en bewustzijn in relatie tot neg en som](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_mf_natural.png)
 
 
-![jitterplot bewustzijn en lichamelijke klachten in de totale groep NVM](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/jitter_som.png)
+![scatterplot male - female differences in consciousness in total nvm group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_t2_mf_natural.png)
 
-![Animatie van de relatie tussen bewustzijn en lichamelijke klachten in de NVM groep](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/bewustzijn_som.gif)
+![Animation consiousness and somatization in total nvm group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/consciousness_som.gif)
 
+![bar graph of consciousness and nvm factors in total group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/boxplot_t2_natural.png)
 
-
+![jitterplot of consciousness and somatization in total group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/jitter_som2.png)
 
