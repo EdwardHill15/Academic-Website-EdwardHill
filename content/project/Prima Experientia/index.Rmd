@@ -20,6 +20,14 @@ In this ontology of consciousness, the reduction base is called "**Prima Experie
 # **Data**
 
 ![bar graph consciousness and nvm factors in total group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/bar2_t.png)
+
+![bargraph of consciousness and nvm factors in women](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/bar1_f.png)
+
+![bargraph of consciousness and nvm factors in men](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/bar1_m.png)
+
+
+
+
 ![scatterplot consciousness in relation to negativism and somatization in total group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_t2_natural.png)
 ![scatterplot male - female differences in consciousness in total nvm group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_t2_mf_natural.png)
 
