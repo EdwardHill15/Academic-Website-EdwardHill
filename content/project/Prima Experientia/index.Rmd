@@ -15,8 +15,6 @@ The ontology postulates a **reduction base** by which it can  explain how an **i
 
 In this ontology of consciousness, the reduction base is called "**Prima Experientia**" and the underlying crucial psycho-physical laws were first formulated by the late psychologist James Gibson and his work on the nature and psycho-physical mechanisms of **visual perception**. The Philosophy of Mind of Henri Bergson also plays a fundamental role in this theory of Prima Experientia and the panexperiential reduction with the **ultimate metaphysical goal** of solving the "**Hard Problem of Consciousness**" (Chalmers, 1995). 
  
-
-
 # **Data**
 
 ![bar graph consciousness and nvm factors in total group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/bar2_t.png)
@@ -26,11 +24,10 @@ In this ontology of consciousness, the reduction base is called "**Prima Experie
 ![bargraph of consciousness and nvm factors in men](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/bar1_m.png)
 
 ![scatterplot consciousness in relation to negativism and somatization in total group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_t2_natural.png)
+
 ![scatterplot male - female differences in consciousness in total nvm group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/Scatter_t2_mf_natural.png)
 
 ![Animation consiousness and somatization in total nvm group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/consciousness_som.gif)
-
-![bar graph of consciousness and nvm factors in total group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/boxplot_t2_natural.png)
 
 ![jitterplot of consciousness and somatization in total group](https://raw.githubusercontent.com/EdwardHill15/Data/main/Prima%20Experientia/jitter_som2.png)
 
