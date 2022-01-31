@@ -9,8 +9,6 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-![The Precarious Acritical Subject of Postmodernity](https://www.imageconscious.com/wp-content/uploads/2019/07/D2024D.jpg)
-
 *'I am basically putting forward the hypothesis that the new state of capitalism could not be better at producing the schizoid subject of postmodernity. Given the desymbolizing tendency we are now experiencing, a critical subject who puts forward arguments constructed in the name of the moral imperative of freedom is surplus to requirements. So, too, is the neurotic subject trapped into compulsive guilt. We now require a precarious, acritical subject who displays psychotic tendencies. When I say 'displays psychotic tendencies', I refer to a subject who is open to all kinds of fluctuating identities and who is therefore ready to be plugged into every commodity.'*
 
 
