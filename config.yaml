@@ -4,7 +4,7 @@ theme: "starter-hugo-academic"
 # Hugo Documentation: https://gohugo.io/getting-started/configuration/#all-configuration-settings
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
-title: Edward Hillenaar # Website name
+title: Total Health Foundation # Website name
 baseurl: 'edwardhill15-academic.netlify.app' # Website URL
 copyright: '2021 Copyright by Edward Hillenaar' # Footer text, e.g. '© {year} Me'
 
