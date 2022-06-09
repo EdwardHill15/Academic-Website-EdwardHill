@@ -2,16 +2,13 @@
 title: "Alfred North Whitehead"
 author: "Edward Hill"
 date: "06-12-2021"
-output: 
-  #cleanrmd::html_document_clean:
-    #theme: sakura-vader
-    html_document:
-      theme: darkly
-      toc: true
-      toc_float: true
-bibliography: Whitehead.bib
-biblio-style: apalike
-link-citations: yes
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 3
+ bibliography: biblio.bib
+ preview: preview.png
 ---
 
 ```{r setup, include=FALSE}
@@ -20,16 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-Include reference in the text [@Sjostedt-Hughes2016]. This is another citation [@Segall2019]. [@Smith2010]
-
-More references: 
-[@Maxwell2011]
-[@Lowe1990]
-[@Whitehead1929]
-
-En nog meer: [@Whitehead2007]
-
-Alfred North Whitehead [@Whitehead1922]
+Include reference in the text [@Sjostedt-Hughes2016]. This is another citation [@Desmet2010]. 
 
 ![Alfred North Whitehead](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5mJNNsRXJEEAHckAcjz4JYpcC2jDwHVY4tD3AZ7xh1v3h23WEb5zOF_1rT59bySSG5Bc&usqp=CAU)
 
