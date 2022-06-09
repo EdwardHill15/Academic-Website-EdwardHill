@@ -3,12 +3,15 @@ title: "Alfred North Whitehead"
 author: "Edward Hill"
 date: "06-12-2021"
 output:
-  distill::distill_article:
-    self_contained: false
-    toc: true
-    toc_depth: 3
- bibliography: biblio.bib
- preview: preview.png
+  pdf_document:
+    #includes:
+      #in_header: tex file.tex
+  html_document:
+    df_print: paged
+bibliography: Whitehead.bib
+biblio-style: apalike
+link-citations: yes
+ 
 ---
 
 ```{r setup, include=FALSE}
