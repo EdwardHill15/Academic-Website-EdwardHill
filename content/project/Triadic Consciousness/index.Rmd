@@ -12,7 +12,7 @@ links:
 #slides: example
 summary: An example of using the in-built project page.
 tags:
-#- Deep Learning
+- Alfred North Whitehead
 title: Triadic Consciousness
 url_code: ""
 url_pdf: ""
